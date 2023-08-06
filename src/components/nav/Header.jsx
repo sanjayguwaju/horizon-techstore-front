@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 const items = [
   {
     label: 'Home',
-    key: 'mail',
+    key: 'home',
     icon: <MailOutlined />,
   },
   {
@@ -24,7 +24,7 @@ const items = [
   },
 ];
 const Header = () => {
-  const [current, setCurrent] = useState('mail');
+  const [current, setCurrent] = useState('home');
   const onClick = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
