@@ -10,7 +10,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const config = {
-      url: "http://localhost:5173/register/complete",
+      url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
       handleCodeInApp: true,
     };
     sendSignInLinkToEmail(auth,email, config)
