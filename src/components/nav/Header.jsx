@@ -5,7 +5,7 @@ const items = [
   {
     label: 'Home',
     key: 'home',
-    icon: <MailOutlined />,
+    icon: <AppstoreOutlined />,
   },
   {
     label: 'Register',
