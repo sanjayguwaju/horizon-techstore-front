@@ -9,3 +9,7 @@
 #container::after {
     color: brown;
 }
+
+#container::before{
+    color: blanchedalmond;
+}
