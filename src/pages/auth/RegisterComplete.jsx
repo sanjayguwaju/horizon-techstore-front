@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase";
-import { signInWithEmailLink } from "firebase/auth";
+import { signInWithEmailLink, updatePassword } from "firebase/auth";
 import { toast } from "react-toastify";
 
 const RegisterComplete = ({ history }) => {
@@ -25,25 +25,15 @@ const RegisterComplete = ({ history }) => {
     }
 
     try {
-      const result = await signInWithEmailLink(
-        auth,
-        email,
-        window.location.href
-      );
+      const result = await signInWithEmailLink(auth, email, window.location.href);
 
-      console.log("AUTHENTICATION RESULT", auth)
       if (result.user.emailVerified) {
-        // remove user email fom local storage
         window.localStorage.removeItem("emailForRegistration");
-        // get user id token
-        let user = auth.currentUser;
-        console.log("==========", user);
 
-        await user.updatePassword(password);
-        const idTokenResult = await user.getIdTokenResult();
-        // redux store
-        console.log("user", user, "idTokenResult", idTokenResult);
-        // redirect
+        // Update the password
+        await updatePassword(result.user, password);
+
+        // Redirect or further actions
         history.push("/");
       }
     } catch (error) {
