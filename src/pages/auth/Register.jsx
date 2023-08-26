@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {auth} from '../../firebase';
 import {sendSignInLinkToEmail } from "firebase/auth";
 import {toast} from 'react-toastify';
