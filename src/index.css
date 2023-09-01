@@ -5,3 +5,7 @@
 #container::shadow {
     color:blue;
 }
+
+#container::after {
+    color: brown;
+}
