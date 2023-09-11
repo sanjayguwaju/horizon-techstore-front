@@ -12,6 +12,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import './Header.css'
 
 const { SubMenu, Item } = Menu;
 
