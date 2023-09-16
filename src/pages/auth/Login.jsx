@@ -111,7 +111,7 @@ const Login = ({ history }) => {
 
           <Button
             onClick={googleLogin}
-            type="danger"
+            type="primary"
             className="mb-3"
             block
             shape="round"

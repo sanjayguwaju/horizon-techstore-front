@@ -15,7 +15,11 @@ const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && wi
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <BrowserRouter>
-    <ConfigProvider>
+    <ConfigProvider theme={{
+      token: {
+        colorPrimary: '#2123bf',
+      }
+    }}>
       <App />
     </ConfigProvider>
     </BrowserRouter>
