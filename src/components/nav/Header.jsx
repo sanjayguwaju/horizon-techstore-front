@@ -8,6 +8,7 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+// we don't need to import firebase from firebase/compact/app
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { useDispatch, useSelector} from "react-redux";
