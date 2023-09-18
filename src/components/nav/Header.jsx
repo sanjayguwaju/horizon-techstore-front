@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { useHistory } from "react-router-dom";
 import './Header.css'
 
