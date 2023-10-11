@@ -1,3 +1,8 @@
 .box {
     font-size: large;
 }
+
+.box ::backdrop {
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+}
