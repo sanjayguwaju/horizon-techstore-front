@@ -6,3 +6,7 @@
     font-size: large;
     font-family: 'Courier New', Courier, monospace;
 }
+
+.box::before {
+    flex-direction: column;
+}
