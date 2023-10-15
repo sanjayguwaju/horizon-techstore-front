@@ -13,3 +13,7 @@
 #container::before{
     color: blanchedalmond;
 }
+
+#container:active {
+    color:blue;
+}
