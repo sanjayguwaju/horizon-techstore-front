@@ -17,3 +17,7 @@
 #container:active {
     color:blue;
 }
+
+#container::content {
+    cursor: auto;
+}
