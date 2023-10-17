@@ -21,3 +21,8 @@
 #container::content {
     cursor: auto;
 }
+
+#container::after {
+    cursor:all-scroll;
+}
+
