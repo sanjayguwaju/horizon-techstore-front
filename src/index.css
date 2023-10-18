@@ -1,5 +1,6 @@
 #container {
     background-color: rgb(122, 122, 187);
+    font-size: 20px;
 }
 
 #container::shadow {
