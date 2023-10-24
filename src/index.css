@@ -4,6 +4,8 @@
     text-emphasis: center;
     align-items: end;
     font-weight: 100px;
+    flex-direction: column;
+
 }
 
 #container::shadow {
