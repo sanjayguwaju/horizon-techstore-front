@@ -4,6 +4,7 @@
     text-emphasis: center;
     align-items: end;
     font-weight: 100px;
+    display: flex;
     flex-direction: column;
 
 }
