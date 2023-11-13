@@ -46,14 +46,14 @@ const Login = ({ history }) => {
       .then((res)=> console.log("CREATE OR UPDATE RES", res))
       .catch()
 
-      // dispatch({
-      //   type: "LOGGED_IN_USER",
-      //   payload: {
-      //     email: user.email,
-      //     token: idTokenResult.token,
-      //   },
-      // });
-      // history.push("/");
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload: {
+          email: user.email,
+          token: idTokenResult.token,
+        },
+      });
+      history.push("/");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
