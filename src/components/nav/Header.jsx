@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Menu } from "antd";
 import {
   AppstoreOutlined,
@@ -7,13 +7,12 @@ import {
   UserAddOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-// we don't need to import firebase from firebase/compact/app
+import { Link, useNavigate } from "react-router-dom"; // Update import
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { useDispatch, useSelector} from "react-redux";
-import { useHistory } from "react-router-dom";
-import './Header.css'
+import { useDispatch, useSelector } from "react-redux";
+
+import "./Header.css";
 
 const { SubMenu, Item } = Menu;
 
@@ -21,8 +20,8 @@ const Header = () => {
   const [current, setCurrent] = useState("home");
 
   let dispatch = useDispatch();
-  let {user} = useSelector((state) => ({...state}));
-  let history = useHistory();
+  let { user } = useSelector((state) => ({ ...state }));
+  let navigate = useNavigate(); // Replace useHistory with useNavigate
 
   const handleClick = (e) => {
     console.log(e.key);
@@ -34,7 +33,7 @@ const Header = () => {
       type: "LOGOUT",
       payload: null,
     });
-    history.push("/login");
+    navigate("/login"); // Use navigate instead of history.push
   };
 
   return (
@@ -55,8 +54,8 @@ const Header = () => {
       )}
 
       {user && (
-        <SubMenu 
-          icon={<SettingOutlined />} 
+        <SubMenu
+          icon={<SettingOutlined />}
           title={user?.email && user?.email.split("@")[0]}
           className="float-right"
         >
