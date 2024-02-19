@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom"; // Update import
 import firebase from "firebase/compat/app";
+import { getAuth, signOut } from "firebase/auth"; 
 import "firebase/compat/auth";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -29,11 +30,22 @@ const Header = () => {
   };
 
   const logout = () => {
-    dispatch({
-      type: "LOGOUT",
-      payload: null,
-    });
-    navigate("/login"); // Use navigate instead of history.push
+    const auth = getAuth(); // Get the auth instance and call signOut() to signOut from firebase.
+  
+    signOut(auth)
+      .then(() => {
+        dispatch({
+          type: "LOGOUT",
+          payload: {
+            email: null,
+            token: null
+          },
+        });
+        navigate("/login"); // Use navigate instead of history.push
+      })
+      .catch((error) => {
+        console.error("Error signing out: ", error);
+      });
   };
 
   return (
