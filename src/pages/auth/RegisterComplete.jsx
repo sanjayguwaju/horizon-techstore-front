@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { signInWithEmailLink, updatePassword } from "firebase/auth";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createOrUpdateUser } from "../../functions/auth";
 
-const RegisterComplete = ({ history }) => {
+const RegisterComplete = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
+  const { user } = useSelector((state) => ({...state}));
 
   useEffect(() => {
     setEmail(window.localStorage.getItem("emailForRegistration"));
@@ -26,15 +32,29 @@ const RegisterComplete = ({ history }) => {
 
     try {
       const result = await signInWithEmailLink(auth, email, window.location.href);
-
-      if (result.user.emailVerified) {
+      if (result?.user?.emailVerified) {
         window.localStorage.removeItem("emailForRegistration");
 
         // Update the password
-        await updatePassword(result.user, password);
+        await updatePassword(result?.user, password);
+        const idTokenResult = result?.user?.accessToken;
+        console.log("idTokenResult ==>", idTokenResult);
 
+        createOrUpdateUser(idTokenResult).then((res)=> {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res?.data?.name,
+              email: res?.data?.email,
+              token: idTokenResult,
+              role: res?.data?.role,
+              _id: res?.data?._id
+            },
+          });
+        }).catch(err => console.log(err));
+        
         // Redirect or further actions
-        history.push("/");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

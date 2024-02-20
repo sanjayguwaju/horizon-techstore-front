@@ -7,17 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword,signInWithPopup } from "firebase/auth";
-import axios from "axios";
-
-
-const createOrUpdateUser = async (authtoken) => {
-  return await axios.post(
-    `${process.env.REACT_APP_API}/create-or-update-user`, {}, {
-    headers: {
-      authtoken: authtoken,
-    }
-  })
-}
+import { createOrUpdateUser } from "../../functions/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -53,7 +43,7 @@ const Login = () => {
             _id: res.data._id
           },
         });
-      }).catch()
+      }).catch(err => console.log(err));
 
       navigate("/");
     } catch (error) {
@@ -68,13 +58,18 @@ const Login = () => {
       .then(async (result) => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user.email,
-            token: idTokenResult.token,
-          },
-        });
+        createOrUpdateUser(idTokenResult.token).then((res)=> {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res?.data?.name,
+              email: res?.data?.email,
+              token: idTokenResult?.token,
+              role: res?.data?.role,
+              _id: res?.data?._id
+            },
+          });
+        }).catch(err => console.log(err));
         navigate("/");
       })
       .catch((err) => {
