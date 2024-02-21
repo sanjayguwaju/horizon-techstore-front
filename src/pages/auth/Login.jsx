@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword,signInWithPopup } from "firebase/auth";
 import { createOrUpdateUser } from "../../functions/auth";
 
+
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +18,14 @@ const Login = () => {
   let navigate = useNavigate();
 
   let dispatch = useDispatch();
+  
+  const roleBasedRedirect = (res) => {
+    if (res.data.role === "admin") {
+      navigate("/admin/dashboard");
+    } else {
+      navigate("/user/history")
+    }
+  }
 
   const { user } = useSelector((state) => ({...state}));
 
@@ -31,21 +41,21 @@ const Login = () => {
     try {
       const result = await signInWithEmailAndPassword(auth,email, password);
       const { user } = result;
-      const idTokenResult = await user.getIdTokenResult();
-      createOrUpdateUser(idTokenResult.token).then((res)=> {
+      const idTokenResult = await user?.getIdTokenResult();
+      createOrUpdateUser(idTokenResult?.token).then((res)=> {
         dispatch({
           type: "LOGGED_IN_USER",
           payload: {
-            name: res.data.name,
-            email: res.data.email,
-            token: idTokenResult.token,
-            role: res.data.role,
-            _id: res.data._id
+            name: res?.data?.name,
+            email: res?.data?.email,
+            token: idTokenResult?.token,
+            role: res?.data?.role,
+            _id: res?.data?._id
           },
         });
+        roleBasedRedirect(res?.data?.role);
       }).catch(err => console.log(err));
-
-      navigate("/");
+     
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -69,8 +79,8 @@ const Login = () => {
               _id: res?.data?._id
             },
           });
+          roleBasedRedirect(res?.data?.role);
         }).catch(err => console.log(err));
-        navigate("/");
       })
       .catch((err) => {
         console.log(err);
