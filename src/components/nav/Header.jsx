@@ -42,6 +42,7 @@ const Header = () => {
           },
         });
         navigate("/login"); // Use navigate instead of history.push
+        window.location.reload(); // Refresh the page
       })
       .catch((error) => {
         console.error("Error signing out: ", error);
