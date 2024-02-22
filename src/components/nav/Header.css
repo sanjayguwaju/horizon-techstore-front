@@ -5,3 +5,11 @@
 .ant-menu-overflow{
   display: block !important;
 }
+
+.header-nav-link {
+  text-decoration: none;
+}
+
+.header-nav-link:hover {
+  text-decoration: none;
+}
