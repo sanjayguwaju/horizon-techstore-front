@@ -19,21 +19,22 @@ const Login = () => {
 
   let dispatch = useDispatch();
   
-  const roleBasedRedirect = (res) => {
+  const roleBasedRedirect = (res) => { 
+    console.log("res.data ---->", res.data.role);
     if (res.data.role === "admin") {
       navigate("/admin/dashboard");
     } else {
-      navigate("/user/history")
+      navigate("/dummy")
     }
   }
 
-  const { user } = useSelector((state) => ({...state}));
+  // const { user } = useSelector((state) => ({...state}));
 
-  useEffect(() => {
-    if (user && user?.token) {
-      navigate("/")
-    }
-  }, [navigate,user]);
+  // useEffect(() => {
+  //   if (user && user?.token) {
+  //     navigate("/")
+  //   }
+  // }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,7 +54,7 @@ const Login = () => {
             _id: res?.data?._id
           },
         });
-        roleBasedRedirect(res?.data?.role);
+        roleBasedRedirect(res);
       }).catch(err => console.log(err));
      
     } catch (error) {
