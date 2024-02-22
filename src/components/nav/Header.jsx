@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { Menu } from "antd";
 import {
@@ -8,7 +9,6 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom"; // Update import
-import firebase from "firebase/compat/app";
 import { getAuth, signOut } from "firebase/auth"; 
 import "firebase/compat/auth";
 import { useDispatch, useSelector } from "react-redux";
