@@ -2,6 +2,7 @@ import { useRoutes, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import History from '../../pages/user/History';
+import LoadingToRedirect from './LoadingToRedirect';
 
 const UserRoute = () => {
   const [loading, setLoading] = useState(true);
@@ -16,7 +17,9 @@ const UserRoute = () => {
 
   if (loading) {
     // Show a loading indicator or a placeholder while user data is being fetched
-    return <div>Loading...</div>;
+    return (
+      <LoadingToRedirect/>
+    )
   }
 
   let element;
