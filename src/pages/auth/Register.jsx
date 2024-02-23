@@ -4,6 +4,7 @@ import {sendSignInLinkToEmail } from "firebase/auth";
 import {toast} from 'react-toastify';
 import { useSelector } from "react-redux";
 import 'react-toastify/dist/ReactToastify.min.css';
+import "./Register.css"
 
 const Register = ({history}) => {
   const [email, setEmail] = useState("");
@@ -41,7 +42,10 @@ const Register = ({history}) => {
         placeholder="Enter your email"
       />
 
-      <button type="submit" className="btn btn-raised">
+      <button 
+        type="submit" 
+        className="btn btn-raised register-btn"
+      >
         Register
       </button>
     </form>
