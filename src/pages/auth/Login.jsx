@@ -23,7 +23,7 @@ const Login = () => {
     if (res.data.role === "admin") {
       navigate("/admin/dashboard");
     } else {
-      navigate("/dummy")
+      navigate("/user/history")
     }
   }
 
