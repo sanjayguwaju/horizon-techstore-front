@@ -11,6 +11,7 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
+import UserRoute from "./components/routes/UserRoute";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="/forgot/password" element={<ForgotPassword />} />
           <Route path="/dummy" element={<div>Dummy Page</div>} /> 
           <Route path="/admin/dashboard" element={<div>I am Admin Page</div>} /> 
+          <Route path="/user/*" element={<UserRoute/>} />
         </Routes>
       </div>
     </>

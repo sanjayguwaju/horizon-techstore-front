@@ -20,7 +20,6 @@ const Login = () => {
   let dispatch = useDispatch();
   
   const roleBasedRedirect = (res) => { 
-    console.log("res.data ---->", res.data.role);
     if (res.data.role === "admin") {
       navigate("/admin/dashboard");
     } else {
