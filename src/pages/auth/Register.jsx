@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import 'react-toastify/dist/ReactToastify.min.css';
 import "./Register.css"
 
+// eslint-disable-next-line react/prop-types
 const Register = ({history}) => {
   const [email, setEmail] = useState("");
 
@@ -13,13 +14,15 @@ const Register = ({history}) => {
 
   useEffect(() => {
     if (user && user?.token) {
+      // eslint-disable-next-line react/prop-types
       history.push("/")
     }
-  }, [user]);
+  }, [user, history]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const config = {
+      // eslint-disable-next-line no-undef
       url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
       handleCodeInApp: true,
     };

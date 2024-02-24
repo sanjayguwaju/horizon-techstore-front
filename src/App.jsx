@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -12,6 +12,7 @@ import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
 import UserRoute from "./components/routes/UserRoute";
+import AdminRoute from "./components/routes/AdminRoute";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const App = () => {
           <Route path="/register/complete" element={<RegisterComplete />} />
           <Route path="/forgot/password" element={<ForgotPassword />} />
           <Route path="/dummy" element={<div>Dummy Page</div>} /> 
-          <Route path="/admin/dashboard" element={<div>I am Admin Page</div>} /> 
+          <Route path="/admin/*" element={<AdminRoute/>} /> 
           <Route path="/user/*" element={<UserRoute/>} />
         </Routes>
       </div>
