@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import History from '../../pages/user/History';
 import LoadingToRedirect from './LoadingToRedirect';
+import Password from '../../pages/user/Password';
+import Wishlist from '../../pages/user/Wishlist';
 
 const UserRoute = () => {
   const [loading, setLoading] = useState(true);
@@ -33,6 +35,14 @@ const UserRoute = () => {
         path: 'history', 
         element: <History/> 
       },
+      {
+        path: 'password',
+        element: <Password/>
+      },
+      {
+        path: 'wishlist',
+        element: <Wishlist/>
+      }
       // add more routes as needed
     ]);
   }
