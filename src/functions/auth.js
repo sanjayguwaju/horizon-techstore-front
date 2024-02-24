@@ -17,5 +17,15 @@ export const currentUser = async (authtoken) => {
         headers: {
             authtoken: authtoken,
         }
-    })
-}
+    });
+};
+
+export const currentAdmin = async (authtoken) => {
+    return await axios.post(
+        // eslint-disable-next-line no-undef
+        `${process.env.REACT_APP_API}/current-admin`, {}, {
+        headers: {
+            authtoken: authtoken,
+        }
+    });
+};
