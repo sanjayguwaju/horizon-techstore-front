@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import LoadingToRedirect from './LoadingToRedirect';
 import { currentAdmin } from '../../functions/auth';
 import AdminDashboard from '../../pages/admin/AdminDashboard';
+import CategoryCreate from '../../pages/admin/category/CategoryCreate';
 
 const AdminRoute = () => {
   const [loading, setLoading] = useState(true);
@@ -44,6 +45,10 @@ const AdminRoute = () => {
       { 
         path: 'dashboard', 
         element: <AdminDashboard/> 
+      },
+      { 
+        path: 'category', 
+        element: <CategoryCreate/> 
       },
       // add more routes as needed
     ]);
