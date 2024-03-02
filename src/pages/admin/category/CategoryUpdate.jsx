@@ -21,6 +21,7 @@ const CategoryUpdate = () => {
   const loadCategory = async () => {
     try {
       const category = await getCategory(slug);
+      console.log({category});
       setName(category.name);
     } catch (error) {
       console.error("Failed to load category", error);
