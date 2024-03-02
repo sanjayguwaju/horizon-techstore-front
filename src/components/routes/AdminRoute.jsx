@@ -5,6 +5,7 @@ import LoadingToRedirect from './LoadingToRedirect';
 import { currentAdmin } from '../../functions/auth';
 import AdminDashboard from '../../pages/admin/AdminDashboard';
 import CategoryCreate from '../../pages/admin/category/CategoryCreate';
+import CategoryUpdate from '../../pages/admin/category/CategoryUpdate';
 
 const AdminRoute = () => {
   const [loading, setLoading] = useState(true);
@@ -49,6 +50,10 @@ const AdminRoute = () => {
       { 
         path: 'category', 
         element: <CategoryCreate/> 
+      },
+      { 
+        path: 'category/:slug', 
+        element: <CategoryUpdate/> 
       },
       // add more routes as needed
     ]);
