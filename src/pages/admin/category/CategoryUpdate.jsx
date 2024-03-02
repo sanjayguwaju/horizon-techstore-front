@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { getCategory, updateCategory } from "../../../functions/category";
 import { useNavigate, useParams } from 'react-router-dom';
+import CategoryForm from "../../../components/forms/CategoryForm";
 
 const CategoryUpdate = () => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -74,7 +75,11 @@ const CategoryUpdate = () => {
           ) : (
             <h4>Update category</h4>
           )}
-          {categoryForm()}
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
           <hr />
         </div>
       </div>
