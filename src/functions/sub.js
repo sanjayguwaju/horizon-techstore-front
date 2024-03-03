@@ -1,5 +1,11 @@
 import axios from "axios";
 
+
+export const getSubs = async () => {
+    const response = await axios.get(`${process.env.REACT_APP_API}/subs`);
+    return response.data;
+}
+
 export const getSub = async (slug) => {
     const response = await axios.get(`${process.env.REACT_APP_API}/sub/${slug}`);
     return response.data;
