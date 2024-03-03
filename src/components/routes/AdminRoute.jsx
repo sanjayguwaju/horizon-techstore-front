@@ -6,6 +6,7 @@ import { currentAdmin } from '../../functions/auth';
 import AdminDashboard from '../../pages/admin/AdminDashboard';
 import CategoryCreate from '../../pages/admin/category/CategoryCreate';
 import CategoryUpdate from '../../pages/admin/category/CategoryUpdate';
+import SubCreate from '../../pages/admin/sub/SubCreate';
 
 const AdminRoute = () => {
   const [loading, setLoading] = useState(true);
@@ -54,6 +55,10 @@ const AdminRoute = () => {
       { 
         path: 'category/:slug', 
         element: <CategoryUpdate/> 
+      },
+      { 
+        path: 'sub', 
+        element: <SubCreate/> 
       },
       // add more routes as needed
     ]);
