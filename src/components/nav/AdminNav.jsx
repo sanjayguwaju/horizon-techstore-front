@@ -7,7 +7,12 @@ const AdminNav = () => {
             <li className="nav-item">
                 <Link to="/admin/dashboard" className="nav-link">History</Link>
             </li>
-
+            <li className="nav-item" >
+                <Link to="/admin/product" className="nav-link">Product</Link>
+            </li>
+            <li className="nav-item" >
+                <Link to="/admin/products" className="nav-link">Products</Link>
+            </li>
             <li className="nav-item">
                 <Link to="/admin/password" className="nav-link">Password</Link>
             </li>
@@ -21,6 +26,7 @@ const AdminNav = () => {
             <li className="nav-item" >
                 <Link to="/admin/sub" className="nav-link">Sub Category</Link>
             </li>
+
             <li className="nav-item" >
                 <Link to="/admin/coupon" className="nav-link">Coupon</Link>
             </li>
