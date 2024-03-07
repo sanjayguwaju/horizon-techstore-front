@@ -4,12 +4,13 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { createProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
+import { getCategories } from "../../../functions/category";
 
 const initialState = {
   title: "Macbook Pro",
   description: "This is the best Apple product",
   price: "45000",
-  // categories: [],
+  categories: [],
   // category: "",
   // subs: [],
   shipping: "Yes",
@@ -25,8 +26,19 @@ const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
 
   useEffect(() => {
-  console.log("values --->", values);
-}, [values]);
+    loadCategories();
+  }, []);
+  
+const loadCategories = async () => {
+  try {
+    const c = await getCategories();
+    setValues({ ...values, categories: c });
+    return c;
+  } catch (error) {
+    console.error("Error loading categories:", error);
+    // throw error;
+  }
+};
 
   // redux
   const { user } = useSelector((state) => ({ ...state }));
@@ -35,7 +47,6 @@ const ProductCreate = () => {
     e.preventDefault();
     try {
       const res = await createProduct(values, user.token);
-      console.log("res ---->",res);
       window.alert(`"${res.title}" is created`);
       window.location.reload();
     } catch (err) {
@@ -58,7 +69,6 @@ const ProductCreate = () => {
       <div className="col-md-10">
         <h4>Product create</h4>
         <hr />
-
         <ProductCreateForm
           handleSubmit={handleSubmit}
           handleChange={handleChange}
