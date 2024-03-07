@@ -25,6 +25,7 @@ const initialState = {
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
+  const [showSub, setShowSub] = useState(false);
 
   useEffect(() => {
     loadCategories();
@@ -67,7 +68,7 @@ const loadCategories = async () => {
     try {
       const res = await getCategorySubs(e.target.value);
       console.log("SUB OPTIONS ON CATEGORY CLICK", res);
-      setSubOptions(res.data);
+      setSubOptions(res);
     } catch (err) {
       console.log("Error getting category subs", err);
     }
@@ -88,6 +89,8 @@ const loadCategories = async () => {
           handleChange={handleChange}
           values={values}
           handleCatagoryChange={handleCatagoryChange}
+          subOptions={subOptions}
+          showSub={showSub}
         />
       </div>
     </div>
