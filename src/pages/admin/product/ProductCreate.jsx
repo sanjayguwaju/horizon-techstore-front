@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { createProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
-import { getCategories } from "../../../functions/category";
+import { getCategories, getCategorySubs } from "../../../functions/category";
 
 const initialState = {
   title: "Macbook Pro",
@@ -24,6 +24,7 @@ const initialState = {
 
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
+  const [subOptions, setSubOptions] = useState([]);
 
   useEffect(() => {
     loadCategories();
@@ -59,6 +60,19 @@ const loadCategories = async () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  const handleCatagoryChange = async (e) => {
+    e.preventDefault();
+    console.log("CLICKED CATEGORY", e.target.value);
+    setValues({ ...values, category: e.target.value });
+    try {
+      const res = await getCategorySubs(e.target.value);
+      console.log("SUB OPTIONS ON CATEGORY CLICK", res);
+      setSubOptions(res.data);
+    } catch (err) {
+      console.log("Error getting category subs", err);
+    }
+  };
+
   return (
     <div className="container-fluid">
     <div className="row">
@@ -73,6 +87,7 @@ const loadCategories = async () => {
           handleSubmit={handleSubmit}
           handleChange={handleChange}
           values={values}
+          handleCatagoryChange={handleCatagoryChange}
         />
       </div>
     </div>

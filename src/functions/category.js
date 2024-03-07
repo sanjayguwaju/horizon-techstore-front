@@ -41,4 +41,9 @@ export const createCategory = async (category, authtoken) => {
     console.error('Error creating category', error);
     throw error;
   }
+};
+
+export const getCategorySubs = async (_id) => {
+  const response = await axios.get(`${process.env.REACT_APP_API}/category/subs/${_id}`);
+  return response.data;
 }
