@@ -91,6 +91,7 @@ const loadCategories = async () => {
           handleCatagoryChange={handleCatagoryChange}
           subOptions={subOptions}
           showSub={showSub}
+          setValues={setValues}
         />
       </div>
     </div>
