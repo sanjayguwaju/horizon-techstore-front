@@ -64,11 +64,12 @@ const loadCategories = async () => {
   const handleCatagoryChange = async (e) => {
     e.preventDefault();
     console.log("CLICKED CATEGORY", e.target.value);
-    setValues({ ...values, category: e.target.value });
+    setValues({ ...values, subs: [], category: e.target.value });
     try {
       const res = await getCategorySubs(e.target.value);
       console.log("SUB OPTIONS ON CATEGORY CLICK", res);
       setSubOptions(res);
+      setShowSub(true);
     } catch (err) {
       console.log("Error getting category subs", err);
     }
