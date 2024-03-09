@@ -6,6 +6,7 @@ import { createProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
+import { Flex, Spin } from 'antd';
 
 const initialState = {
   title: "Macbook Pro",
@@ -83,13 +84,19 @@ const loadCategories = async () => {
         <div className="col-md-2">
           <AdminNav />
         </div>
-
         <div className="col-md-10">
-          <h4>Product create</h4>
           <hr />
-          {JSON.stringify(values.images)}
+ 
+          {/* {JSON.stringify(values.images)} */}
 
           <div className="p-3">
+            {loading ? (
+              <Flex align="center" gap="middle">
+                <Spin size="large" />
+              </Flex>
+            ) : (
+              <h4>Product create</h4>
+            )}
             <FileUpload
               values={values}
               setValues={setValues}
