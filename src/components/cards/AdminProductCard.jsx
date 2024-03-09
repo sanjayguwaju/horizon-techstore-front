@@ -4,9 +4,9 @@ import laptop from "../../assets/images/computer/laptop.png";
 
 const { Meta } = Card;
 
-const AdminProductCard = ({ product }) => {
+const AdminProductCard = ({ product, handleRemove }) => {
   // destructure
-  const { title, description, images } = product;
+  const { title, description, images, slug } = product;
 
   return (
     <Card
@@ -19,7 +19,10 @@ const AdminProductCard = ({ product }) => {
       }
       actions={[
         <EditOutlined className="text-warning" />,
-        <DeleteOutlined className="text-danger" />,
+        <DeleteOutlined
+          onClick={() => handleRemove(slug)}
+          className="text-danger"
+        />,
       ]}
     >
       <Meta

@@ -18,9 +18,23 @@ export const createProduct = async (product, authtoken) => {
 export const getProductsByCount = async (count) => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_API}/products/${count}`);
-    return response;
+    return response.data;
   } catch (error) {
     console.error(`Failed to fetch products: ${error}`);
+    throw error;
+  }
+};
+
+export const removeProduct = async (slug, authtoken) => {
+  try {
+    const response = await axios.delete(`${process.env.REACT_APP_API}/product/${slug}`, {
+      headers: {
+        authtoken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to remove product: ${error}`);
     throw error;
   }
 };
