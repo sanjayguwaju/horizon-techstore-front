@@ -9,6 +9,7 @@ import CategoryUpdate from '../../pages/admin/category/CategoryUpdate';
 import SubCreate from '../../pages/admin/sub/SubCreate';
 import SubUpdate from '../../pages/admin/sub/SubUpdate';
 import ProductCreate from '../../pages/admin/product/ProductCreate';
+import AllProducts from '../../pages/admin/product/AllProducts';
 
 const AdminRoute = () => {
   const [loading, setLoading] = useState(true);
@@ -69,6 +70,18 @@ const AdminRoute = () => {
       { 
         path: 'product', 
         element: <ProductCreate/>
+      },
+      { 
+        path: 'products', 
+        element: <AllProducts/>
+      },
+      { 
+        path: 'wishlist', 
+        element: <h4>Wishlist Page</h4>
+      },
+      { 
+        path: 'coupon', 
+        element: <h4>Coupon Page</h4>
       },
       // add more routes as needed
     ]);

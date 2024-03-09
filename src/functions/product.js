@@ -13,3 +13,14 @@ export const createProduct = async (product, authtoken) => {
     throw error;
   }
 }
+
+
+export const getProductsByCount = async (count) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API}/products/${count}`);
+    return response;
+  } catch (error) {
+    console.error(`Failed to fetch products: ${error}`);
+    throw error;
+  }
+};

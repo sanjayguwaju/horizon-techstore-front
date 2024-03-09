@@ -1,4 +1,7 @@
+import { useState, useEffect } from "react";
 import AdminNav from "../../components/nav/AdminNav";
+import { getProductsByCount } from "../../functions/product";
+import AdminProductCard from "../../components/cards/AdminProductCard";
 
 const AdminDashboard = () => {
   return (
@@ -7,7 +10,10 @@ const AdminDashboard = () => {
         <div className="col-md-2">
           <AdminNav />
         </div>
-        <div className="col">Admin Dashboard Page</div>
+
+        <div className="col">
+          <h4>Admin Dashboard</h4>
+        </div>
       </div>
     </div>
   );
