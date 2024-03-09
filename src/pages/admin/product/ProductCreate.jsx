@@ -12,11 +12,11 @@ const initialState = {
   description: "This is the best Apple product",
   price: "45000",
   categories: [],
-  // category: "",
-  // subs: [],
+  category: "",
+  subs: [],
   shipping: "Yes",
   quantity: "50",
-  // images: [],
+  images: [],
   colors: ["Black", "Brown", "Silver", "White", "Blue"],
   brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
   color: "White",
@@ -27,6 +27,7 @@ const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
   const [showSub, setShowSub] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadCategories();
@@ -78,29 +79,35 @@ const loadCategories = async () => {
 
   return (
     <div className="container-fluid">
-    <div className="row">
-      <div className="col-md-2">
-        <AdminNav />
-      </div>
-
-      <div className="col-md-10">
-        <h4>Product create</h4>
-        <hr />
-        <div className="p-3">
-            <FileUpload />
+      <div className="row">
+        <div className="col-md-2">
+          <AdminNav />
         </div>
-        <ProductCreateForm
-          handleSubmit={handleSubmit}
-          handleChange={handleChange}
-          values={values}
-          handleCatagoryChange={handleCatagoryChange}
-          subOptions={subOptions}
-          showSub={showSub}
-          setValues={setValues}
-        />
+
+        <div className="col-md-10">
+          <h4>Product create</h4>
+          <hr />
+          {JSON.stringify(values.images)}
+
+          <div className="p-3">
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
+          </div>
+          <ProductCreateForm
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            values={values}
+            handleCatagoryChange={handleCatagoryChange}
+            subOptions={subOptions}
+            showSub={showSub}
+            setValues={setValues}
+          />
+        </div>
       </div>
     </div>
-  </div>
   );
 };
 
