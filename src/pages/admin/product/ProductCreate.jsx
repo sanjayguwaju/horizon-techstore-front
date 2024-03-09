@@ -6,7 +6,7 @@ import { createProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
-import { Flex, Spin } from 'antd';
+import { Flex, Spin } from "antd";
 
 const initialState = {
   title: "Macbook Pro",
@@ -33,17 +33,17 @@ const ProductCreate = () => {
   useEffect(() => {
     loadCategories();
   }, []);
-  
-const loadCategories = async () => {
-  try {
-    const c = await getCategories();
-    setValues({ ...values, categories: c });
-    return c;
-  } catch (error) {
-    console.error("Error loading categories:", error);
-    // throw error;
-  }
-};
+
+  const loadCategories = async () => {
+    try {
+      const c = await getCategories();
+      setValues({ ...values, categories: c });
+      return c;
+    } catch (error) {
+      console.error("Error loading categories:", error);
+      // throw error;
+    }
+  };
 
   // redux
   const { user } = useSelector((state) => ({ ...state }));
@@ -85,10 +85,6 @@ const loadCategories = async () => {
           <AdminNav />
         </div>
         <div className="col-md-10">
-          <hr />
- 
-          {/* {JSON.stringify(values.images)} */}
-
           <div className="p-3">
             {loading ? (
               <Flex align="center" gap="middle">
@@ -103,6 +99,7 @@ const loadCategories = async () => {
               setLoading={setLoading}
             />
           </div>
+          <hr />
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
