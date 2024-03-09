@@ -86,12 +86,12 @@ const ProductCreate = () => {
         </div>
         <div className="col-md-10">
           <div className="p-3">
-            {loading ? (
+            <h4>Product create</h4>
+            <hr/>
+            {loading && (
               <Flex align="center" gap="middle">
                 <Spin size="large" />
               </Flex>
-            ) : (
-              <h4>Product create</h4>
             )}
             <FileUpload
               values={values}
@@ -99,7 +99,7 @@ const ProductCreate = () => {
               setLoading={setLoading}
             />
           </div>
-          <hr />
+
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
