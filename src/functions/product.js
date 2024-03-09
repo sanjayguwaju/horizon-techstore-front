@@ -38,3 +38,13 @@ export const removeProduct = async (slug, authtoken) => {
     throw error;
   }
 };
+
+export const getProduct = async (slug) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API}/product/${slug}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch product: ${error}`);
+    throw error;
+  }
+};
