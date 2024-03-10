@@ -3,7 +3,7 @@ import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from 'react-router-dom';
-import { getProduct } from "../../../functions/product";
+import { getProduct, updateProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
@@ -77,8 +77,23 @@ const ProductUpdate = ({ match }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    values.subs = arrayOfSubs;
+    values.category = selectedCategory ? selectedCategory : values?.category;
+
+    try {
+      const res = await updateProduct(slug, values, user?.token);
+      setLoading(false);
+      toast.success(`"${res.title}" is updated`);
+      navigate("/admin/products");
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      toast.error(err.response.err);
+    }
   };
 
   const handleChange = (e) => {

@@ -48,3 +48,17 @@ export const getProduct = async (slug) => {
     throw error;
   }
 };
+
+export const updateProduct = async (slug, product, authtoken) => {
+  try {
+    const response = await axios.put(`${process.env.REACT_APP_API}/product/${slug}`, product, {
+      headers: {
+        authtoken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

@@ -93,7 +93,7 @@ const FileUpload = ({ values, setValues, setLoading, loading }) => {
         vertical
         style={{
           backgroundColor: "#F7DBDB",
-          border: "2px dashed #000",
+          border: "2px dashed transparent",
           padding: "20px 20px 30px 40px",
           borderRadius: "10px",
         }}
@@ -125,7 +125,7 @@ const FileUpload = ({ values, setValues, setLoading, loading }) => {
         </Flex>
         <Flex>
           <Button className="mt-2" type="dashed" onClick={handleClick}>
-            Choose File
+            Upload images
           </Button>
           <input
             type="file"
