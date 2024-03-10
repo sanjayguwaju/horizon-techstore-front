@@ -1,11 +1,17 @@
-import React from "react";
+import { useRef } from "react";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Avatar, Badge, Flex} from "antd";
+import { Avatar, Badge, Flex, Button} from "antd";
 
 const FileUpload = ({ values, setValues, setLoading }) => {
   const { user } = useSelector((state) => ({ ...state }));
+
+  const fileInput = useRef();
+
+  const handleClick = () => {
+    fileInput.current.click();
+  };
 
   const fileUploadAndResize = async (e) => {
     let files = e.target.files;
@@ -82,36 +88,38 @@ const FileUpload = ({ values, setValues, setLoading }) => {
 
   return (
     <>
-        <Flex align="center" gap="middle">
-          {values.images &&
-            values.images.map((image) => (
-              <Badge
-                count="X"
-                key={image.public_id}
-                onClick={() => handleImageRemove(image.public_id)}
-                style={{ cursor: "pointer" }}
-              >
-                <Avatar
-                  src={image.url}
-                  size={100}
-                  shape="square"
-                  className="ml-3"
-                />
-              </Badge>
-            ))}
-        </Flex>
-        <Flex>
-            <label className="btn btn-primary">
-              Choose File
-              <input
-                type="file"
-                multiple
-                hidden
-                accept="images/*"
-                onChange={fileUploadAndResize}
+      <Flex align="center" gap="middle">
+        {values.images &&
+          values.images.map((image) => (
+            <Badge
+              count="X"
+              key={image.public_id}
+              onClick={() => handleImageRemove(image.public_id)}
+              style={{ cursor: "pointer" }}
+            >
+              <Avatar
+                src={image.url}
+                size={100}
+                shape="square"
+                className="ml-3"
               />
-            </label>
-        </Flex>
+            </Badge>
+          ))}
+      </Flex>
+      <Flex>
+        <Button type="dashed" onClick={handleClick}>
+          Choose File
+        </Button>
+        <input
+          type="file"
+          multiple
+          hidden
+          accept="images/*"
+          onChange={fileUploadAndResize}
+          ref={fileInput}
+        />
+        {/* <label className="btn btn-primary">Choose File</label> */}
+      </Flex>
     </>
   );
 };

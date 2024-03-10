@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import "antd/dist/reset.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from '../src/pages/reducers';
