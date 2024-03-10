@@ -9,6 +9,7 @@ import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
 import { LoadingOutlined } from "@ant-design/icons";
 import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
+import { Flex, Spin } from "antd";
 
 const initialState = {
   title: "",
@@ -32,6 +33,7 @@ const ProductUpdate = ({ match }) => {
   const [subOptions, setSubOptions] = useState([]);
   const [arrayOfSubs, setArrayOfSubs] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { slug } = useParams();
@@ -120,7 +122,17 @@ const ProductUpdate = ({ match }) => {
         </div>
 
         <div className="col-md-10">
-          <h4>Product update</h4>
+          <div className="p-3">
+            <h4>Product Update</h4>
+            <hr />
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          </div>
+          <hr />
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}

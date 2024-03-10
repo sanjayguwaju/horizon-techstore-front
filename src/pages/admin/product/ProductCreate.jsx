@@ -88,14 +88,10 @@ const ProductCreate = () => {
           <div className="p-3">
             <h4>Product create</h4>
             <hr/>
-            {loading && (
-              <Flex align="center" gap="middle">
-                <Spin size="large" />
-              </Flex>
-            )}
             <FileUpload
               values={values}
               setValues={setValues}
+              loading={loading}
               setLoading={setLoading}
             />
           </div>

@@ -2,9 +2,9 @@ import { useRef } from "react";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Avatar, Badge, Flex, Button} from "antd";
+import { Avatar, Badge, Flex, Button, Spin} from "antd";
 
-const FileUpload = ({ values, setValues, setLoading }) => {
+const FileUpload = ({ values, setValues, setLoading, loading }) => {
   const { user } = useSelector((state) => ({ ...state }));
 
   const fileInput = useRef();
@@ -88,37 +88,54 @@ const FileUpload = ({ values, setValues, setLoading }) => {
 
   return (
     <>
-      <Flex align="center" gap="middle">
-        {values.images &&
-          values.images.map((image) => (
-            <Badge
-              count="X"
-              key={image.public_id}
-              onClick={() => handleImageRemove(image.public_id)}
-              style={{ cursor: "pointer" }}
-            >
-              <Avatar
-                src={image.url}
-                size={100}
-                shape="square"
-                className="ml-3"
-              />
-            </Badge>
-          ))}
-      </Flex>
-      <Flex>
-        <Button type="dashed" onClick={handleClick}>
-          Choose File
-        </Button>
-        <input
-          type="file"
-          multiple
-          hidden
-          accept="images/*"
-          onChange={fileUploadAndResize}
-          ref={fileInput}
-        />
-        {/* <label className="btn btn-primary">Choose File</label> */}
+      <Flex
+        align="center"
+        vertical
+        style={{
+          backgroundColor: "#F7DBDB",
+          border: "2px dashed #000",
+          padding: "20px 20px 30px 40px",
+          borderRadius: "10px",
+        }}
+      >
+        <Flex gap="middle">
+          {values.images &&
+            values.images.map((image) => (
+              <Badge
+                count="X"
+                key={image?.public_id}
+                onClick={() => handleImageRemove(image.public_id)}
+                style={{ cursor: "pointer" }}
+              >
+                <Avatar
+                  src={image?.url}
+                  size={100}
+                  shape="square"
+                  className="ml-3"
+                />
+              </Badge>
+            ))}
+        </Flex>
+        <Flex className="mt-2">
+          {loading && (
+            <Flex align="center" gap="middle">
+              <Spin size="large" />
+            </Flex>
+          )}
+        </Flex>
+        <Flex>
+          <Button className="mt-2" type="dashed" onClick={handleClick}>
+            Choose File
+          </Button>
+          <input
+            type="file"
+            multiple
+            hidden
+            accept="images/*"
+            onChange={fileUploadAndResize}
+            ref={fileInput}
+          />
+        </Flex>
       </Flex>
     </>
   );
