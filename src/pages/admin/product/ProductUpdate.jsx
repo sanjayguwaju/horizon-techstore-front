@@ -31,6 +31,7 @@ const ProductUpdate = ({ match }) => {
   const [categories, setCategories] = useState([]);
   const [subOptions, setSubOptions] = useState([]);
   const [arrayOfSubs, setArrayOfSubs] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const navigate = useNavigate();
   const { slug } = useParams();
@@ -82,12 +83,30 @@ const ProductUpdate = ({ match }) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleCatagoryChange = async (e) => {
+  // Function to handle category change
+  const handleCategoryChange = async (e) => {
     e.preventDefault();
-    setValues({ ...values, subs: [], category: e.target.value });
+
+    // Reset subs and set the new category
+    setValues({ ...values, subs: [] });
+
+    // Set the selected category
+    setSelectedCategory(e.target.value);
+
     try {
+      // Fetch subcategories related to the selected category
       const res = await getCategorySubs(e.target.value);
+
+      // Set these subcategories as options for the 'Subs' field
       setSubOptions(res);
+
+      // If user reselects the original category, reload the product to show its subcategories by default
+      if (values.category._id === e.target.value) {
+        loadProduct();
+      }
+
+      // Clear old subcategory IDs
+      setArrayOfSubs([]);
     } catch (err) {
       console.log(err);
     }
@@ -107,11 +126,12 @@ const ProductUpdate = ({ match }) => {
             handleChange={handleChange}
             setValues={setValues}
             values={values}
-            handleCatagoryChange={handleCatagoryChange}
+            handleCategoryChange={handleCategoryChange}
             categories={categories}
             subOptions={subOptions}
             arrayOfSubs={arrayOfSubs}
             setArrayOfSubs={setArrayOfSubs}
+            selectedCategory={selectedCategory}
           />
           <hr />
         </div>
