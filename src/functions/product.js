@@ -62,3 +62,17 @@ export const updateProduct = async (slug, product, authtoken) => {
     throw error;
   }
 };
+
+export const getProducts = async (sort, order, limit) => {
+  try {
+    const response = await axios.post(`${process.env.REACT_APP_API}/products`, {
+      sort,
+      order,
+      limit,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

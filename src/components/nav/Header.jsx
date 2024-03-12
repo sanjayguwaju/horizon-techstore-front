@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import { useState } from "react";
 import { Menu } from "antd";
 import {
   AppstoreOutlined,
@@ -74,22 +74,27 @@ const Header = () => {
 
       {user && (
         <SubMenu
-          icon={<SettingOutlined />}
           title={user?.email && user?.email?.split("@")[0]}
+          icon={<SettingOutlined />}
           className="float-right"
+          key="userSubMenu" // Make sure to provide a unique key
         >
-          {user && user.role === "subscriber" && (
-            <Item>
-              <Link to="/user/history" className="header-nav-link">Dashboard</Link>
+          {user.role === "subscriber" && (
+            <Item key="dashboard">
+              <Link to="/user/history" className="header-nav-link">
+                Dashboard
+              </Link>
             </Item>
           )}
 
-          {user && user.role === "admin" && (
-            <Item>
-              <Link to="/admin/dashboard" className="header-nav-link">Dashboard</Link>
+          {user.role === "admin" && (
+            <Item key="adminDashboard">
+              <Link to="/admin/dashboard" className="header-nav-link">
+                Dashboard
+              </Link>
             </Item>
           )}
-          <Item icon={<LogoutOutlined />} onClick={logout}>
+          <Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
             Logout
           </Item>
         </SubMenu>

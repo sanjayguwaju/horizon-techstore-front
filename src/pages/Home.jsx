@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { getProductsByCount } from "../functions/product";
+import { getProducts } from "../functions/product";
 import ProductCard from "../components/cards/ProductCard";
 import Jumbotron from "../components/cards/Jumbotron";
 import LoadingCard from "../components/cards/LoadingCard";
+import NewArrivals from "../components/home/NewArrival";
+import BestSellers from "../components/home/BestSellers";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -14,7 +16,7 @@ const Home = () => {
 
   const loadAllProducts = async () => {
     try {
-      const res = await getProductsByCount(3);
+      const res = await getProducts(3);
       setProducts(res);
       setLoading(false);
     } catch (err) {
@@ -28,19 +30,18 @@ const Home = () => {
         <Jumbotron text={["Latest Products", "New Arrivals", "Best Sellers"]} />
       </div>
 
-      <div className="container">
-        {loading ? (
-          <LoadingCard count={3} />
-        ) : (
-          <div className="row">
-            {products.map((product) => (
-              <div key={product._id} className="col-md-4">
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+        New Arrivals
+      </h4>
+      <NewArrivals />
+
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+        Best Sellers
+      </h4>
+      <BestSellers />
+
+      <br />
+      <br />
     </>
   );
 };
