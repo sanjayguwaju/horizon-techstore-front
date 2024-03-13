@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
-import { getProducts } from "../../functions/product";
+import { getProducts, getProductsCount } from "../../functions/product";
 import ProductCard from "../cards/ProductCard";
 import LoadingCard from "../cards/LoadingCard";
+import { Pagination } from "antd";
 
 const NewArrivals = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [productsCount, setProductsCount] = useState(0);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     loadAllProducts();
-  }, []);
+    getProductsCount().then((res) => setProductsCount(res));
+  }, [page]);
 
   const loadAllProducts = async () => {
     setLoading(true);
     try {
       // sort, order, limit
-      const res = await getProducts("createdAt", "desc", 3);
+      const res = await getProducts("createdAt", "desc", page);
       setProducts(res);
     } catch (err) {
       console.error(err);
@@ -38,6 +42,17 @@ const NewArrivals = () => {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="row">
+        <nav className="col-md-4 offset-md-4 text-center pt-5 p-3">
+          <Pagination
+            current={page}
+            total={productsCount}
+            pageSize={3}
+            onChange={(value) => {setPage(value)}}
+          />
+        </nav>
       </div>
     </>
   );

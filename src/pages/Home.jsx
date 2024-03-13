@@ -1,29 +1,8 @@
-import { useEffect, useState } from "react";
-import { getProducts } from "../functions/product";
-import ProductCard from "../components/cards/ProductCard";
 import Jumbotron from "../components/cards/Jumbotron";
-import LoadingCard from "../components/cards/LoadingCard";
 import NewArrivals from "../components/home/NewArrival";
 import BestSellers from "../components/home/BestSellers";
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    loadAllProducts();
-  }, []);
-
-  const loadAllProducts = async () => {
-    try {
-      const res = await getProducts(3);
-      setProducts(res);
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <>
       <div className="jumbotron text-danger h1 font-weight-bold text-center">
