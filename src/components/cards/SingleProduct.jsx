@@ -57,14 +57,10 @@ const SingleProduct = ({ product }) => {
         <div className="mt-3">
           <Tabs type="card">
             <TabPane tab="Description" key="1">
-              This is a dummy product. It's the best product you can find on the
-              market. It has all the features you need and more. It's made from
-              the highest quality materials and built to last. Whether you need
-              it for personal use or business, this product will not disappoint
-              {/* {description && description} */}
+              {description}
             </TabPane>
             <TabPane tab="More" key="2">
-              Call use on xxxx xxx xxx to learn more about this product.
+              Call us learn more about this product.
             </TabPane>
           </Tabs>
         </div>
