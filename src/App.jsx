@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
 import UserRoute from "./components/routes/UserRoute";
 import AdminRoute from "./components/routes/AdminRoute";
+import Product from "./pages/Product";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -49,9 +50,9 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/register/complete" element={<RegisterComplete />} />
           <Route path="/forgot/password" element={<ForgotPassword />} />
-          <Route path="/dummy" element={<div>Dummy Page</div>} /> 
           <Route path="/admin/*" element={<AdminRoute/>} /> 
           <Route path="/user/*" element={<UserRoute/>} />
+          <Route path="/product/:slug" element={<Product/>}/>
         </Routes>
       </div>
     </>

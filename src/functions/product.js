@@ -62,3 +62,27 @@ export const updateProduct = async (slug, product, authtoken) => {
     throw error;
   }
 };
+
+export const getProducts = async (sort, order, page) => {
+  try {
+    const response = await axios.post(`${process.env.REACT_APP_API}/products`, {
+      sort,
+      order,
+      page,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getProductsCount = async () => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API}/products/total`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
