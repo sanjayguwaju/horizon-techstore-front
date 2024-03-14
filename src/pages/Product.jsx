@@ -27,9 +27,12 @@ const Product = () => {
       <div className="row pt-4">
         <SingleProduct product={product} />
       </div>
-
       <div className="row">
-        <div>Related products</div>
+        <div className="col text-center pt-5 pb-5">
+          <hr />
+          <h4>Related Products</h4>
+          <hr />
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Tabs } from "antd";
 import { Link } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -7,6 +7,8 @@ import Laptop from "../../assets/images/computer/laptop.png";
 import { bottom, left, right } from "@popperjs/core";
 import "./SingleProduct.css";
 import ProductListItems from "./ProductListItem";
+
+const { TabPane } = Tabs;
 
 const { Meta } = Card;
 
@@ -32,7 +34,7 @@ const SingleProduct = ({ product }) => {
           <ImageGallery
             items={reactGalleryImages}
             showThumbnails={true}
-            thumbnailPosition={bottom}
+            thumbnailPosition={right}
             showNav={false}
             autoPlay={false}
             slideInterval={5000}
@@ -52,6 +54,20 @@ const SingleProduct = ({ product }) => {
             }
           />
         )}
+        <div className="mt-3">
+          <Tabs type="card">
+            <TabPane tab="Description" key="1">
+              This is a dummy product. It's the best product you can find on the
+              market. It has all the features you need and more. It's made from
+              the highest quality materials and built to last. Whether you need
+              it for personal use or business, this product will not disappoint
+              {/* {description && description} */}
+            </TabPane>
+            <TabPane tab="More" key="2">
+              Call use on xxxx xxx xxx to learn more about this product.
+            </TabPane>
+          </Tabs>
+        </div>
       </div>
       <div className="col-md-4">
         <h1
