@@ -20,8 +20,8 @@ const initialState = {
   images: [],
   colors: ["Black", "Brown", "Silver", "White", "Blue"],
   brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
-  color: "White",
-  brand: "Apple",
+  color: "",
+  brand: "",
 };
 
 const ProductCreate = () => {
@@ -51,8 +51,8 @@ const ProductCreate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await createProduct(values, user.token);
-      window.alert(`"${res.title}" is created`);
+      const res = await createProduct(values, user?.token);
+      toast.success(`"${res?.title}" is created`);
       window.location.reload();
     } catch (err) {
       console.log(err);
