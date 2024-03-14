@@ -1,0 +1,24 @@
+.slider img,
+.card-image {
+  height: 450px;
+  object-fit: cover;
+}
+
+.custom-original {
+  border: 2px solid #e02222;
+  padding: 10px;
+}
+
+.custom-thumbnail {
+  border: 1px solid #9717dc;
+  padding: 5px;
+}
+
+
+.single-product-gallery {
+    border: 1px solid #f0f0f0; /* Ant Design cards have a light grey border */
+    border-radius: 10px; /* Ant Design cards have a small border radius */
+    background-color: #fff; /* Ant Design cards have a white background */
+    box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.10); /* Ant Design cards have a slight box shadow */
+    padding: 24px; /* Ant Design cards have padding around the content */
+}
