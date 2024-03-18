@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth, googleAuthProvider } from "../../firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useDispatch , useSelector} from "react-redux";
+import { Link, useNavigate, useLocation} from "react-router-dom";
+import {  } from "react-router-dom";
 import { signInWithEmailAndPassword,signInWithPopup } from "firebase/auth";
 import { createOrUpdateUser } from "../../functions/auth";
 
@@ -15,25 +15,34 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  let navigate = useNavigate();
-
+  const { user } = useSelector((state) => ({ ...state }));
   let dispatch = useDispatch();
-  
-  const roleBasedRedirect = (res) => { 
-    if (res.data.role === "admin") {
-      navigate("/admin/dashboard");
-    } else {
-      navigate("/user/history")
+  let navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check if there's an intended route in the location state
+    const intended = location.state?.from;
+
+    if (!intended && user && user.token) {
+      navigate("/");
     }
-  }
+  }, [user, navigate, location.state]);
 
-  // const { user } = useSelector((state) => ({...state}));
-
-  // useEffect(() => {
-  //   if (user && user?.token) {
-  //     navigate("/")
-  //   }
-  // }, [user]);
+  const roleBasedRedirect = (res) => {
+    // Check if there's an intended route in the location state
+    const intended = location.state?.from;
+    if (intended) {
+      navigate(intended);
+    } else {
+      // Assuming res.data.role is coming from an asynchronous operation
+      if (res.data.role === "admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/user/history");
+      }
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -15,7 +15,7 @@ const { TabPane } = Tabs;
 const { Meta } = Card;
 
 const SingleProduct = ({ product }) => {
-  const { title, description, images, slug } = product;
+  const { title, description, images, slug, _id} = product;
 
   const reactGalleryImages = images?.map((item) => ({
     original: item.url,
@@ -100,7 +100,7 @@ const SingleProduct = ({ product }) => {
             </Link>,
             <RatingModal>
               <StarRating
-                name={123}
+                name={_id}
                 numberOfStars={5}
                 rating={2}
                 changeRating={(newRating, name) =>
