@@ -7,6 +7,8 @@ import Laptop from "../../assets/images/computer/laptop.png";
 import { bottom, left, right } from "@popperjs/core";
 import "./SingleProduct.css";
 import ProductListItems from "./ProductListItem";
+import StarRating from "react-star-ratings";
+import RatingModal from "../modal/RatingModal";
 
 const { TabPane } = Tabs;
 
@@ -75,6 +77,18 @@ const SingleProduct = ({ product }) => {
         >
           <span>{title}</span>
         </h1>
+        <div>
+          <StarRating
+            name={123}
+            numberOfStars={5}
+            rating={2}
+            changeRating={(newRating, name) =>
+              console.log("newRating", newRating, "name", name)
+            }
+            isSelectable={true}
+            starRatedColor="red"
+          />
+        </div>
         <Card
           actions={[
             <>
@@ -84,6 +98,18 @@ const SingleProduct = ({ product }) => {
             <Link to="/">
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </Link>,
+            <RatingModal>
+              <StarRating
+                name={123}
+                numberOfStars={5}
+                rating={2}
+                changeRating={(newRating, name) =>
+                  console.log("newRating", newRating, "name", name)
+                }
+                isSelectable={true}
+                starRatedColor="red"
+              />
+            </RatingModal>,
           ]}
         >
           <ProductListItems product={product} />
