@@ -86,3 +86,20 @@ export const getProductsCount = async () => {
     throw error;
   }
 };
+
+export const productStar = async (productId, star, authtoken) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_API}/product/star/${productId}`,
+      { star },
+      {
+        headers: {
+          authtoken,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -27,7 +27,7 @@ const handleModal = () => {
   const handleOk = () => {
     setModalVisible(false);
     toast.success("Thanks for your review. It will appear soon");
-    setIsModalOpen(false);
+    setModalVisible(false);
   };
 
   const handleCancel = () => {
