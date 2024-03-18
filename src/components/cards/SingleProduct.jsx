@@ -7,13 +7,16 @@ import Laptop from "../../assets/images/computer/laptop.png";
 import { bottom, left, right } from "@popperjs/core";
 import "./SingleProduct.css";
 import ProductListItems from "./ProductListItem";
+import StarRating from "react-star-ratings";
+import RatingModal from "../modal/RatingModal";
+import showAverageRating  from "../../functions/rating";
 
 const { TabPane } = Tabs;
 
 const { Meta } = Card;
 
-const SingleProduct = ({ product }) => {
-  const { title, description, images, slug } = product;
+const SingleProduct = ({ product, onStarClick, star }) => {
+  const { title, description, images, slug, _id} = product;
 
   const reactGalleryImages = images?.map((item) => ({
     original: item.url,
@@ -75,6 +78,10 @@ const SingleProduct = ({ product }) => {
         >
           <span>{title}</span>
         </h1>
+
+        {product && product.ratings && product.ratings.length > 0
+          ? showAverageRating(product)
+          : "No rating yet"}
         <Card
           actions={[
             <>
@@ -84,6 +91,16 @@ const SingleProduct = ({ product }) => {
             <Link to="/">
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </Link>,
+            <RatingModal>
+              <StarRating
+                name={_id}
+                numberOfStars={5}
+                rating={star}
+                changeRating={onStarClick}
+                isSelectable={true}
+                starRatedColor="red"
+              />
+            </RatingModal>,
           ]}
         >
           <ProductListItems product={product} />
