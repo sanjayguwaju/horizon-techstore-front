@@ -23,9 +23,15 @@ const showAverageRating = (product) => {
     let averageRating = (totalRating * 5) / highestPossibleRating;
 
     return (
-      <div className="text-center pt-1 pb-3">
+<div className="text-center pt-1 pb-3">
         <span>
-          <StarRating rating={averageRating} />
+          <StarRating
+            starDimension="20px"
+            starSpacing="2px"
+            starRatedColor="red"
+            rating={averageRating}
+            editing={false}
+          />{" "}
         </span>
       </div>
     );

@@ -103,3 +103,13 @@ export const productStar = async (productId, star, authtoken) => {
     console.error(error);
   }
 };
+
+export const getRelated = async (productId) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API}/product/related/${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error; // re-throw the error so it can be caught and handled by the calling function
+  }
+};

@@ -82,19 +82,6 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         {product && product.ratings && product.ratings.length > 0
           ? showAverageRating(product)
           : "No rating yet"}
-{/* 
-        <div>
-          <StarRating
-            name={123}
-            numberOfStars={5}
-            rating={2}
-            changeRating={(newRating, name) =>
-              console.log("newRating", newRating, "name", name)
-            }
-            isSelectable={true}
-            starRatedColor="red"
-          />
-        </div> */}
         <Card
           actions={[
             <>
