@@ -15,6 +15,7 @@ import UserRoute from "./components/routes/UserRoute";
 import AdminRoute from "./components/routes/AdminRoute";
 import Product from "./pages/Product";
 import CategoryHome from "./pages/category/CategoryHome";
+import SubHome from "./pages/sub/SubHome";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="/user/*" element={<UserRoute/>} />
           <Route path="/product/:slug" element={<Product/>}/>
           <Route path="/category/:slug" element={<CategoryHome/>}/>
+          <Route path="/sub/:slug" element={<SubHome/>}/>
         </Routes>
       </div>
     </>
