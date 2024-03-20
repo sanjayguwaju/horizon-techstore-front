@@ -5,21 +5,55 @@ import ProductCard from "../../components/cards/ProductCard";
 import CategoryList from "../../components/category/CategoryList";
 
 const CategoryHome = ({ match }) => {
-    const [category, setCategory] = useState({});
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
+  const [category, setCategory] = useState({});
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    const { slug } = useParams();
+  const { slug } = useParams();
 
-    useEffect(() => {
-        setLoading(true);
-        getCategory(slug).then((c) => {
-            console.log(JSON.stringify(c, null, 4));
-            setCategory(c);
-        });
-    }, []);
+  useEffect(() => {
+    const fetchCategory = async () => {
+      setLoading(true);
+      try {
+        const res = await getCategory(slug);
+        console.log(JSON.stringify(res, null, 4));
+        setCategory(res.category);
+        setProducts(res.products);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return <p>{slug}</p>;
+    fetchCategory();
+  }, []);
+
+  return (
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col">
+          {loading ? (
+            <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+              Loading...
+            </h4>
+          ) : (
+            <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+              {products.length} Products in "{category.name}" category
+            </h4>
+          )}
+        </div>
+      </div>
+
+      <div className="row">
+        {products.map((p) => (
+          <div className="col" key={p._id}>
+            <ProductCard product={p} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default CategoryHome;
