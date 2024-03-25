@@ -3,10 +3,11 @@ import {
   getProductsByCount,
   fetchProductsByFilter,
 } from "../functions/product";
+import { getCategories } from "../functions/category";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
-import { Menu, Slider } from "antd";
-import { DollarOutlined } from "@ant-design/icons";
+import { Menu, Slider, Checkbox } from "antd";
+import { DollarOutlined, DownSquareOutlined } from "@ant-design/icons";
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -15,6 +16,8 @@ const Shop = () => {
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState([0, 0]);
   const [ok, setOk] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [categoryIds, setCategoryIds] = useState([]);
 
   let dispatch = useDispatch();
   let { search } = useSelector((state) => ({ ...state }));
@@ -22,6 +25,7 @@ const Shop = () => {
 
   useEffect(() => {
     loadAllProducts();
+    getCategories().then((res) => setCategories(res));
   }, []);
 
   const fetchProducts = (arg) => {
@@ -63,6 +67,42 @@ const Shop = () => {
     }, 300);
   };
 
+  const showCategories = () =>
+    categories.map(({ _id, name }) => (
+      <div key={_id}>
+        <Checkbox
+          onChange={handleCheck}
+          className="pb-2 pl-4 pr-4"
+          value={_id}
+          name="category"
+          checked={categoryIds.includes(_id)}
+        >
+          {name}
+        </Checkbox>
+        <br />
+      </div>
+    ));
+
+  const handleCheck = (e) => {
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    let categorySet = new Set(categoryIds);
+    let justChecked = e.target.value;
+
+    if (categorySet.has(justChecked)) {
+      categorySet.delete(justChecked);
+    } else {
+      categorySet.add(justChecked);
+    }
+
+    let updatedCategoryIds = Array.from(categorySet);
+    setCategoryIds(updatedCategoryIds);
+    fetchProducts({ category: updatedCategoryIds });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -89,6 +129,17 @@ const Shop = () => {
                   max={4999}
                 />
               </div>
+            </SubMenu>
+
+            <SubMenu
+              key="2"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Categories
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }}>{showCategories()}</div>
             </SubMenu>
           </Menu>
         </div>
