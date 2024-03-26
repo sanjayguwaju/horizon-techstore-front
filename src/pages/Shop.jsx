@@ -35,6 +35,15 @@ const Shop = () => {
     "ASUS",
   ]);
   const [brand, setBrand] = useState("");
+  const [colors, setColors] = useState([
+    "Black",
+    "Brown",
+    "Silver",
+    "White",
+    "Blue",
+  ]);
+  const [color, setColor] = useState("");
+  const [shipping, setShipping] = useState("");
 
   let dispatch = useDispatch();
   let { search } = useSelector((state) => ({ ...state }));
@@ -165,6 +174,9 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
+    setBrand("")
+    setColor("");
+    setShipping("")
     fetchProducts({ sub });
   };
 
@@ -190,8 +202,77 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
+    setBrand("")
+    setColor("");
+    setShipping("")
     setBrand(e.target.value);
     fetchProducts({ brand: e.target.value });
+  };
+
+  const showColors = () =>
+    colors.map((c) => (
+      <Radio
+        value={c}
+        name={c}
+        checked={c === color}
+        onChange={handleColor}
+        className="pb-1 pl-4 pr-4"
+      >
+        {c}
+      </Radio>
+    ));
+
+  const handleColor = (e) => {
+    setSub("");
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setBrand("");
+    setColor(e.target.value);
+    setShipping("");
+    fetchProducts({ color: e.target.value });
+  };
+
+  // 9. show products based on shipping yes/no
+  const showShipping = () => (
+    <>
+      <Checkbox
+        className="pb-2 pl-4 pr-4"
+        onChange={handleShippingchange}
+        value="Yes"
+        checked={shipping === "Yes"}
+      >
+        Yes
+      </Checkbox>
+
+      <Checkbox
+        className="pb-2 pl-4 pr-4"
+        onChange={handleShippingchange}
+        value="No"
+        checked={shipping === "No"}
+      >
+        No
+      </Checkbox>
+    </>
+  );
+
+  const handleShippingchange = (e) => {
+    setSub("");
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setBrand("");
+    setColor("");
+    setShipping(e.target.value);
+    fetchProducts({ shipping: e.target.value });
   };
 
   return (
@@ -201,7 +282,7 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu defaultOpenKeys={["1", "2", "3", "4"]} mode="inline">
+          <Menu defaultOpenKeys={["1", "2", "3", "4","5","6","7"]} mode="inline">
             <SubMenu
               key="1"
               title={
@@ -221,7 +302,6 @@ const Shop = () => {
                 />
               </div>
             </SubMenu>
-
             <SubMenu
               key="2"
               title={
@@ -264,6 +344,30 @@ const Shop = () => {
             >
               <div style={{ maringTop: "-10px" }} className="pr-5">
                 {showBrands()}
+              </div>
+            </SubMenu>
+            <SubMenu
+              key="6"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Colors
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }} className="pr-5">
+                {showColors()}
+              </div>
+            </SubMenu>
+            <SubMenu
+              key="7"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Shipping
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }} className="pr-5">
+                {showShipping()}
               </div>
             </SubMenu>
           </Menu>
