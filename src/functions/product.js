@@ -113,3 +113,13 @@ export const getRelated = async (productId) => {
     throw error; // re-throw the error so it can be caught and handled by the calling function
   }
 };
+
+export const fetchProductsByFilter = async(arg) => {
+  try {
+    const response =  await axios.post(`${process.env.REACT_APP_API}/search/filters`, arg);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}

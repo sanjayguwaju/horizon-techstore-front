@@ -7,13 +7,15 @@ import {
   UserOutlined,
   UserAddOutlined,
   LogoutOutlined,
+  ShoppingOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom"; // Update import
-import { getAuth, signOut } from "firebase/auth"; 
+import { getAuth, signOut } from "firebase/auth";
 import "firebase/compat/auth";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./Header.css";
+import Search from "../forms/Search";
 
 const { SubMenu, Item } = Menu;
 
@@ -31,14 +33,14 @@ const Header = () => {
 
   const logout = () => {
     const auth = getAuth(); // Get the auth instance and call signOut() to signOut from firebase.
-  
+
     signOut(auth)
       .then(() => {
         dispatch({
           type: "LOGOUT",
           payload: {
             email: null,
-            token: null
+            token: null,
           },
         });
         navigate("/login"); // Use navigate instead of history.push
@@ -56,6 +58,10 @@ const Header = () => {
           Home
         </Link>
       </Item>
+      <Item key="shop" icon={<ShoppingOutlined />}>
+        <Link to="/shop">Shop</Link>
+      </Item>
+
       {!user && (
         <Item key="register" icon={<UserAddOutlined />} className="float-right">
           <Link to="/register" className="header-nav-link">
@@ -99,6 +105,9 @@ const Header = () => {
           </Item>
         </SubMenu>
       )}
+      <span className="float-right p-1">
+        <Search />
+      </span>
     </Menu>
   );
 };
