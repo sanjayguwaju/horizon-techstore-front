@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { useState } from "react";
-import { Menu } from "antd";
+import { Menu, Badge } from "antd";
 import {
   AppstoreOutlined,
   SettingOutlined,
@@ -8,6 +8,7 @@ import {
   UserAddOutlined,
   LogoutOutlined,
   ShoppingOutlined,
+  ShoppingCartOutlined
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom"; // Update import
 import { getAuth, signOut } from "firebase/auth";
@@ -23,7 +24,9 @@ const Header = () => {
   const [current, setCurrent] = useState("home");
 
   let dispatch = useDispatch();
-  let { user } = useSelector((state) => ({ ...state }));
+  let { user, cart } = useSelector((state) => ({ ...state }));
+  const data =  useSelector((state) => ({ ...state }));
+  console.log("data --->", data);
   let navigate = useNavigate(); // Replace useHistory with useNavigate
 
   const handleClick = (e) => {
@@ -60,6 +63,14 @@ const Header = () => {
       </Item>
       <Item key="shop" icon={<ShoppingOutlined />}>
         <Link to="/shop">Shop</Link>
+      </Item>
+
+      <Item key="cart" icon={<ShoppingCartOutlined />}>
+        <Link to="/cart">
+          <Badge count={cart?.length} offset={[9, 0]}>
+            Cart
+          </Badge>
+        </Link>
       </Item>
 
       {!user && (
