@@ -71,27 +71,34 @@ const Shop = () => {
 
   // 2. load products on user search input
   useEffect(() => {
-    const delayed = setTimeout(() => {
-      fetchProducts({ query: text });
-    }, 300);
-    return () => clearTimeout(delayed);
+    if (!text) {
+      loadAllProducts();
+    } else {
+      const delayed = setTimeout(() => {
+        fetchProducts({ query: text });
+      }, 300);
+      return () => clearTimeout(delayed);
+    }
   }, [text]);
 
   // 3. load products based on price range
   useEffect(() => {
-    console.log("ok to request");
     fetchProducts({ price });
   }, [ok]);
 
   const handleSlider = (value) => {
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: { text: "" },
-    });
-    setPrice(value);
-    setTimeout(() => {
-      setOk(!ok);
-    }, 300);
+    if (value[0] === 0 && value[1] === 0) {
+      loadAllProducts();
+    } else {
+      dispatch({
+        type: "SEARCH_QUERY",
+        payload: { text: "" },
+      });
+      setPrice(value);
+      setTimeout(() => {
+        setOk(!ok);
+      }, 300);
+    }
   };
 
   const showCategories = () =>
