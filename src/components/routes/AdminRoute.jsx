@@ -11,6 +11,7 @@ import SubUpdate from '../../pages/admin/sub/SubUpdate';
 import ProductCreate from '../../pages/admin/product/ProductCreate';
 import AllProducts from '../../pages/admin/product/AllProducts';
 import ProductUpdate from '../../pages/admin/product/ProductUpdate';
+import CreateCouponPage from '../../pages/admin/coupon/CreateCouponPage';
 
 const AdminRoute = () => {
   const [loading, setLoading] = useState(true);
@@ -82,7 +83,7 @@ const AdminRoute = () => {
       },
       { 
         path: 'coupon', 
-        element: <h4>Coupon Page</h4>
+        element: <CreateCouponPage/>
       },
       { 
         path: 'product/:slug', 
