@@ -5,6 +5,7 @@ import History from '../../pages/user/History';
 import LoadingToRedirect from './LoadingToRedirect';
 import Password from '../../pages/user/Password';
 import Wishlist from '../../pages/user/Wishlist';
+import Checkout from '../../pages/Checkout';
 
 const UserRoute = () => {
   const [loading, setLoading] = useState(true);
@@ -42,6 +43,10 @@ const UserRoute = () => {
       {
         path: 'wishlist',
         element: <Wishlist/>
+      },
+      {
+        path: 'checkout',
+        element: <Checkout/>
       }
       // add more routes as needed
     ]);
