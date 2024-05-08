@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom"; 
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
+import { userCart } from "../functions/user";
 
 const Cart = () => {
   const { cart, user } = useSelector((state) => ({ ...state }));
@@ -8,6 +9,16 @@ const Cart = () => {
 
   let navigate = useNavigate();
   const { slug } = useParams();
+
+  const saveOrderToDb = async () => {
+    try {
+      const res = await userCart(cart, user.token);
+      if (res.data.ok) navigate("/user/checkout");
+    } catch (err) {
+      console.error("Error saving cart", err);
+      // Display error to user, or handle it in some other way
+    }
+  };
 
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
@@ -71,6 +82,7 @@ const Cart = () => {
             <button 
               className="btn btn-sm btn-primary mt-2"
               disabled={!cart.length}
+              onClick={saveOrderToDb}
             >
               Proceed to Checkout
             </button>
