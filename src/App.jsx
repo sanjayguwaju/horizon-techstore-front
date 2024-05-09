@@ -19,6 +19,7 @@ import SubHome from "./pages/sub/SubHome";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import SideDrawer from "./components/drawer/SideDrawer";
+import Payment from "./pages/Payment";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ const App = () => {
           <Route path="/sub/:slug" element={<SubHome/>}/>
           <Route path="/shop" element={<Shop/>}/>
           <Route path="/cart" element={<Cart/>}/>
+          <Route path="/payment" element={<Payment/>}/>
         </Routes>
       </div>
     </>
