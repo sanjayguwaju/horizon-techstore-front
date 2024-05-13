@@ -36,18 +36,10 @@ const StripeCheckout = () => {
   const elements = useElements();
 
   useEffect(() => {
-    const fetchPaymentIntent = async () => {
-      try {
-        const res = await createPaymentIntent(user.token);
-        console.log("res ---->", res);
-        setClientSecret(res.clientSecret);
-      } catch (error) {
-        console.error("Payment Intent Error:", error);
-        setError("Payment processing error, please try again.");
-      }
-    };
-
-    fetchPaymentIntent();
+    createPaymentIntent(user.token).then((res) => {
+      console.log("create payment intent", res.clientSecret);
+      setClientSecret(res.clientSecret);
+    });
   }, [user.token]);
 
   const handleSubmit = useCallback(
