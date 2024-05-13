@@ -3,6 +3,9 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSelector } from "react-redux";
 import { createPaymentIntent } from "../functions/stripe";
 import { Link } from "react-router-dom";
+import { Card } from "antd";
+import Laptop from "../assets/images/computer/laptop.png"
+import { CheckOutlined, DollarOutlined } from "@ant-design/icons";
 
 // Moved outside the component to prevent re-creation on each render
 const cartStyle = {
@@ -24,7 +27,7 @@ const cartStyle = {
 };
 
 const StripeCheckout = () => {
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, coupon } = useSelector((state) => ({ ...state }));
 
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -32,15 +35,22 @@ const StripeCheckout = () => {
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState("");
 
+  const [cartTotal, setCartTotal] = useState(0);
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
+  const [payable, setPayable] = useState(0);
+
   const stripe = useStripe();
   const elements = useElements();
 
   useEffect(() => {
-    createPaymentIntent(user.token).then((res) => {
+    createPaymentIntent(user?.token, coupon).then((res) => {
       console.log("create payment intent", res.clientSecret);
       setClientSecret(res.clientSecret);
+      setCartTotal(res.cartTotal);
+      setTotalAfterDiscount(res.totalAfterDiscount);
+      setPayable(res.payable);
     });
-  }, [user.token]);
+  }, [user?.token]);
 
   const handleSubmit = useCallback(
     async (e) => {
@@ -69,7 +79,7 @@ const StripeCheckout = () => {
         setSucceeded(true);
       }
 
-      // if (succeeded) {
+          // if (succeeded) {
       //   // Clear the CardElement
       //   elements.getElement(CardElement).clear();
       //   // Additional success logic (e.g., updating UI state)
@@ -87,25 +97,67 @@ const StripeCheckout = () => {
 
   return (
     <>
+    {!succeeded && (
+      <div>
+        {coupon && totalAfterDiscount !== undefined ? (
+          <p className="alert alert-success">{`Total after discount: $${totalAfterDiscount}`}</p>
+        ) : (
+          <p className="alert alert-danger">No coupon applied</p>
+        )}
+      </div>
+    )}
+    <div className="text-center pb-5">
+      <Card
+        cover={
+          <img
+            src={Laptop}
+            style={{
+              height: "200px",
+              objectFit: "cover",
+              marginBottom: "-50px",
+            }}
+          />
+        }
+        actions={[
+          <>
+            <DollarOutlined className="text-info" /> <br /> Total: $
+            {cartTotal}
+          </>,
+          <>
+            <CheckOutlined className="text-info" /> <br /> Total payable : $
+            {(payable / 100).toFixed(2)}
+          </>,
+        ]}
+      />
+    </div>
+
+    <form id="payment-form" className="stripe-form" onSubmit={handleSubmit}>
+      <CardElement
+        id="card-element"
+        options={cartStyle}
+        onChange={handleChange}
+      />
+      <button
+        className="stripe-button"
+        disabled={processing || disabled || succeeded}
+      >
+        <span id="button-text">
+          {processing ? <div className="spinner" id="spinner"></div> : "Pay"}
+        </span>
+      </button>
+      <br />
+      {error && (
+        <div className="card-error" role="alert">
+          {error}
+        </div>
+      )}
+      <br />
       <p className={succeeded ? "result-message" : "result-message hidden"}>
         Payment Successful.{" "}
         <Link to="/user/history">See it in your purchase history.</Link>
       </p>
-      <form id="payment-form" className="stripe-form" onSubmit={handleSubmit}>
-        <CardElement
-          id="card-element"
-          options={cartStyle}
-          onChange={handleChange}
-        />
-        <button
-          className="stripe-button"
-          disabled={processing || disabled || succeeded}
-        >
-          {processing ? <div className="spinner" id="spinner"></div> : "Pay"}
-        </button>
-        {error && <div className="error">{error}</div>}
-      </form>
-    </>
+    </form>
+  </>
   );
 };
 

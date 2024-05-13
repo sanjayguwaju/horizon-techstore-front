@@ -77,7 +77,7 @@ const Checkout = () => {
 
   const applyDiscountCoupon = async () => {
     try {
-      const res = await applyCoupon(user.token, coupon);
+      const res = await applyCoupon(user?.token, coupon);
       if (res?.data) {
         setTotalAfterDiscount(res?.data?.totalAfterDiscount);
         dispatch({
