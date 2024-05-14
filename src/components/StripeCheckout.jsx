@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { createPaymentIntent } from "../functions/stripe";
 import { Link } from "react-router-dom";
 import { Card } from "antd";
 import Laptop from "../assets/images/computer/laptop.png"
 import { CheckOutlined, DollarOutlined } from "@ant-design/icons";
+import { createOrder, emptyUserCart } from "../functions/user";
 
 // Moved outside the component to prevent re-creation on each render
 const cartStyle = {
@@ -27,6 +28,7 @@ const cartStyle = {
 };
 
 const StripeCheckout = () => {
+  const dispatch = useDispatch();
   const { user, coupon } = useSelector((state) => ({ ...state }));
 
   const [succeeded, setSucceeded] = useState(false);
@@ -73,6 +75,27 @@ const StripeCheckout = () => {
         // here you get result after successful payment
         // create order and save in database for admin to process
         // empty user cart from redux store and local storage
+
+        createOrder(payload, user.token).then((res) => {
+          if (res.data.ok) {
+            console.log("i am ok");
+            // empty cart from local storage
+            if (typeof window !== "undefined") localStorage.removeItem("cart");
+            // empty cart from redux
+            dispatch({
+              type: "ADD_TO_CART",
+              payload: [],
+            });
+            // reset coupon to false
+            dispatch({
+              type: "COUPON_APPLIED",
+              payload: false,
+            });
+            // empty cart from database
+            emptyUserCart(user.token);
+          }
+        });
+
         console.log(JSON.stringify(payload, null, 4));
         setError(null);
         setProcessing(false);
