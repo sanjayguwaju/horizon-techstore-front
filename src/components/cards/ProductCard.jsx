@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, Tooltip} from "antd";
+import { Card, Tooltip } from "antd";
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import laptop from "../../assets/images/computer/laptop.png";
 import { Link } from "react-router-dom";
-import _ from 'lodash';
-import showAverageRating  from "../../functions/rating";
+import _ from "lodash";
+import showAverageRating from "../../functions/rating";
 
 const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
-  const [toolTip, setTooltip] = useState('Click to add');
+  const [toolTip, setTooltip] = useState("Click to add");
 
   // redux
   const { user, cart } = useSelector((state) => ({ ...state }));
@@ -68,12 +68,21 @@ const ProductCard = ({ product }) => {
           <Link to={`/product/${slug}`}>
             <EyeOutlined className="text-warning" /> <br /> View Product
           </Link>,
-          <Tooltip title={toolTip}>
-          <a onClick={handleAddToCart}>
-            <ShoppingCartOutlined className="text-danger" /> <br /> Add to
-            Cart
-          </a>
-        </Tooltip>,
+          <>
+            {product?.quantity > 0 ? (
+              <Tooltip title={toolTip}>
+                <a onClick={handleAddToCart}>
+                  <ShoppingCartOutlined className="text-danger" /> <br />
+                  Add to Cart
+                </a>
+              </Tooltip>
+            ) : (
+              <a disabled>
+                <ShoppingCartOutlined className="text-danger" /> <br />
+                Out of stock
+              </a>
+            )}
+          </>
         ]}
       >
         <Meta
