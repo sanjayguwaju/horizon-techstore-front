@@ -104,6 +104,9 @@ const Checkout = () => {
       <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
         Save
       </button>
+      <p style={{ color: 'red', marginLeft: '15px' }}>
+        <strong>Don't forget to add address before place order</strong>
+      </p>
     </>
   );
 
@@ -143,9 +146,8 @@ const Checkout = () => {
   return (
     <div className="row">
       <div className="col-md-6">
+        <br />
         <h4>Delivery Address</h4>
-        <br />
-        <br />
         {showAddress()}
         <hr />
         <h4>Got Coupon?</h4>
@@ -156,6 +158,7 @@ const Checkout = () => {
       </div>
 
       <div className="col-md-6">
+        <br/>
         <h4>Order Summary</h4>
         <hr />
         <p>Products {products.length}</p>
