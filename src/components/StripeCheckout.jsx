@@ -176,7 +176,7 @@ const StripeCheckout = () => {
       )}
       <br />
       <p>Use this fake card no. for test purpose now</p>
-      <p style={{ color: 'red', fontSize: '20px' }}>4242 4242 4242 4242    04/42 2222</p>
+      <p style={{ color: 'red', fontSize: '20px' }}>4242 4242 4242 4242 04/42 222 2222</p>
       <p className={succeeded ? "result-message" : "result-message hidden"}>
         Payment Successful.{" "}
         <Link to="/user/history">See it in your purchase history.</Link>
