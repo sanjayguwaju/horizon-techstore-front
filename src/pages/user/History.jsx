@@ -1,10 +1,11 @@
+// src/pages/user/History.js
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 import UserNav from "../../components/nav/UserNav";
 import { getUserOrders } from "../../functions/user";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import ShowPaymentInfo from "../../components/cards/ShowPaymentInfo";
+import { downloadInvoice } from '../../utils/invoice'; // Import the function
 
 const History = () => {
   const [orders, setOrders] = useState([]);
@@ -12,13 +13,17 @@ const History = () => {
 
   useEffect(() => {
     loadUserOrders();
-  }, []);
+  }, [user.token]);
 
-  const loadUserOrders = () =>
-    getUserOrders(user.token).then((res) => {
+  const loadUserOrders = async () => {
+    try {
+      const res = await getUserOrders(user.token);
       console.log(JSON.stringify(res.data, null, 4));
       setOrders(res.data);
-    });
+    } catch (error) {
+      console.error("Failed to load user orders", error);
+    }
+  };
 
   const showOrderInTable = (order) => (
     <table className="table table-bordered">
@@ -34,17 +39,17 @@ const History = () => {
       </thead>
 
       <tbody>
-        {order.products.map((p, i) => (
+        {order?.products?.map((p, i) => (
           <tr key={i}>
             <td>
-              <b>{p.product.title}</b>
+              <b>{p?.product?.title}</b>
             </td>
-            <td>{p.product.price}</td>
-            <td>{p.product.brand}</td>
-            <td>{p.color}</td>
-            <td>{p.count}</td>
+            <td>{p?.product?.price}</td>
+            <td>{p?.product?.brand}</td>
+            <td>{p?.color}</td>
+            <td>{p?.count}</td>
             <td>
-              {p.product.shipping === "Yes" ? (
+              {p?.product?.shipping === "Yes" ? (
                 <CheckCircleOutlined style={{ color: "green" }} />
               ) : (
                 <CloseCircleOutlined style={{ color: "red" }} />
@@ -63,11 +68,13 @@ const History = () => {
         {showOrderInTable(order)}
         <div className="row">
           <div className="col">
-            <p>PDF download</p>
+            <button onClick={() => downloadInvoice(order)}>PDF Download</button>
           </div>
         </div>
       </div>
     ));
+
+  console.log("orders ---->", orders);
 
   return (
     <div className="container-fluid">
