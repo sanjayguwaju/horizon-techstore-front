@@ -68,7 +68,7 @@ const History = () => {
         {showOrderInTable(order)}
         <div className="row">
           <div className="col">
-            <button onClick={() => downloadInvoice(order)}>PDF Download</button>
+            <button onClick={() => downloadInvoice(order)}>Download Invoice</button>
           </div>
         </div>
       </div>
