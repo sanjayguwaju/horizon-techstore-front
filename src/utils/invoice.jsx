@@ -38,7 +38,7 @@ export const downloadInvoice = (order) => {
   doc.rect(margin, 50, tableWidth, 10, "F"); // Draw rectangle with fill
   doc.setTextColor(255, 255, 255); // Set text color to white
   doc.setFontSize(16);
-  doc.text("Invoice", margin + 5, 57); // Position "Invoice" text inside the rectangle
+  doc.text("INVOICE", margin + 5, 57); // Position "Invoice" text inside the rectangle
 
   // Reset text color to black for the rest of the document
   doc.setTextColor(0, 0, 0);
