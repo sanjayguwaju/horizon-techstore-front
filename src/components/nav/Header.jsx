@@ -25,8 +25,6 @@ const Header = () => {
 
   let dispatch = useDispatch();
   let { user, cart } = useSelector((state) => ({ ...state }));
-  const data =  useSelector((state) => ({ ...state }));
-  console.log("data --->", data);
   let navigate = useNavigate(); // Replace useHistory with useNavigate
 
   const handleClick = (e) => {

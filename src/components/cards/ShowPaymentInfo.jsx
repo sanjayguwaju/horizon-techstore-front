@@ -1,35 +1,49 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import { Descriptions, Badge } from "antd";
 
-const ShowPaymentInfo = ({ order }) => (
-  <div>
-    <p>
-      <span>Order Id: {order.paymentIntent.id}</span>
-      {" / "}
-      <span>
-        Amount:{" / "}
-        {(order.paymentIntent.amount /= 100).toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        })}
-      </span>
-      {" / "}
-      <span>Currency: {order.paymentIntent.currency.toUpperCase()}</span>
-      {" / "}
-      <span>Method: {order.paymentIntent.payment_method_types[0]}</span>
-      {" / "}
-      <span>Payment: {order.paymentIntent.status.toUpperCase()}</span>
-      {" / "}
-      <span>
-        Orderd on:{" / "}
-        {new Date(order.paymentIntent.created * 1000).toLocaleString()}
-      </span>
-      {" / "}
-      <span className="badge bg-primary text-white">
-        STATUS: {order.orderStatus}
-      </span>
-    </p>
-  </div>
-);
+const ShowPaymentInfo = ({ order }) => {
+  const {
+    paymentIntent: {
+      id,
+      amount,
+      currency,
+      payment_method_types,
+      status,
+      created,
+    },
+    orderStatus,
+  } = order;
+
+  return (
+    <>
+      <Descriptions title="Order Info" bordered>
+        <Descriptions.Item label="Order Id">{id}</Descriptions.Item>
+        <Descriptions.Item label="Amount">
+          {amount.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          })}
+        </Descriptions.Item>
+        <Descriptions.Item label="Currency">
+          {currency.toUpperCase()}
+        </Descriptions.Item>
+        <Descriptions.Item label="Method">
+          {payment_method_types[0]}
+        </Descriptions.Item>
+        <Descriptions.Item label="Payment">
+          {status.toUpperCase()}
+        </Descriptions.Item>
+        <Descriptions.Item label="Orderd on">
+          {new Date(created * 1000).toLocaleString()}
+        </Descriptions.Item>
+        <Descriptions.Item label="Status">
+          <Badge status="processing" text={orderStatus} />
+        </Descriptions.Item>
+      </Descriptions>
+      <br />
+    </>
+  );
+};
 
 ShowPaymentInfo.propTypes = {
   order: PropTypes.shape({
