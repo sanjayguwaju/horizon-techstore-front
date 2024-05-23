@@ -1,41 +1,48 @@
+import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 
+const { Sider } = Layout;
+
 const AdminNav = () => {
+const menuItemStyle = { textTransform: "uppercase", fontSize: "16px", textDecoration: "none",}; // define the style
+
   return (
-    <nav>
-        <ul className="nav flex-column">
-            <li className="nav-item">
-                <Link to="/admin/dashboard" className="nav-link">Dashboard</Link>
-            </li>
-            <li className="nav-item" >
-                <Link to="/admin/product" className="nav-link">Product</Link>
-            </li>
-            <li className="nav-item" >
-                <Link to="/admin/products" className="nav-link">Products</Link>
-            </li>
-            <li className="nav-item">
-                <Link to="/admin/password" className="nav-link">Password</Link>
-            </li>
+    <Sider width={300} className="site-layout-background">
+      <Menu
+        mode="inline"
+        defaultSelectedKeys={["1"]}
+        style={{ height: "100%", borderRight: 0 }}
+      >
+        <Menu.Item key="1" style={menuItemStyle}>
+          <Link to="/admin/dashboard">Dashboard</Link>
+        </Menu.Item>
+        <Menu.Item key="2" style={menuItemStyle}>
+          <Link to="/admin/product">Product</Link>
+        </Menu.Item>
+        <Menu.Item key="3" style={menuItemStyle}>
+          <Link to="/admin/products">Products</Link>
+        </Menu.Item>
+        <Menu.Item key="4" style={menuItemStyle}>
+          <Link to="/admin/password">Password</Link>
+        </Menu.Item>
+        <Menu.Item key="5" style={menuItemStyle}>
+          <Link to="/admin/wishlist">Wishlist</Link>
+        </Menu.Item>
+        <Menu.Item key="6" style={menuItemStyle}>
+          <Link to="/admin/category">Category</Link>
+        </Menu.Item>
+        <Menu.Item key="7" style={menuItemStyle}>
+          <Link to="/admin/sub">Sub Category</Link>
+        </Menu.Item>
+        <Menu.Item key="8" style={menuItemStyle}>
+          <Link to="/admin/coupon">Coupon</Link>
+        </Menu.Item>
+        <Menu.Item key="9" style={menuItemStyle}>
+          <Link to="/user/password">Users Password</Link>
+        </Menu.Item>
+      </Menu>
+    </Sider>
+  );
+};
 
-            <li className="nav-item" >
-                <Link to="/admin/wishlist" className="nav-link">Wishlist</Link>
-            </li>
-            <li className="nav-item" >
-                <Link to="/admin/category" className="nav-link">Category</Link>
-            </li>
-            <li className="nav-item" >
-                <Link to="/admin/sub" className="nav-link">Sub Category</Link>
-            </li>
-
-            <li className="nav-item" >
-                <Link to="/admin/coupon" className="nav-link">Coupon</Link>
-            </li>
-            <li className="nav-item" >
-                <Link to="/user/password" className="nav-link">Users Password</Link>
-            </li>
-        </ul>
-    </nav>
-  )
-}
-
-export default AdminNav
+export default AdminNav;
