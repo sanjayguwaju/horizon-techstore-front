@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { applyCoupon, emptyUserCart, getUserCart, saveUserAddress } from "../functions/user";
+import { applyCoupon, createCashOrderForUser, emptyUserCart, getUserCart, saveUserAddress } from "../functions/user";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -20,7 +20,8 @@ const Checkout = () => {
   let navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, COD } = useSelector((state) => ({ ...state }));
+  const couponTrueOrFalse = useSelector((state) => state.coupon);
 
   useEffect(() => {
     const fetchUserCart = async () => {
@@ -143,6 +144,41 @@ const Checkout = () => {
     navigate('/payment'); // Navigate to the payment page
   };
 
+const createCashOrder = async () => {
+  try {
+    const res = await createCashOrderForUser(user.token, COD, couponTrueOrFalse);
+    console.log("USER CASH ORDER CREATED RES ", res);
+    // empty cart form redux, local Storage, reset coupon, reset COD, redirect
+    if (res.data.ok) {
+      // empty local storage
+      if (typeof window !== "undefined") localStorage.removeItem("cart");
+      // empty redux cart
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: [],
+      });
+      // empty redux coupon
+      dispatch({
+        type: "COUPON_APPLIED",
+        payload: false,
+      });
+      // empty redux COD
+      dispatch({
+        type: "COD",
+        payload: false,
+      });
+      // empty cart from backend
+      emptyUserCart(user.token);
+      // redirect
+      setTimeout(() => {
+        navigate("/user/history");
+      }, 1000);
+    }
+  } catch (error) {
+    console.error("Error creating cash order", error);
+  }
+};
+
   return (
     <div className="row">
       <div className="col-md-6">
@@ -153,12 +189,12 @@ const Checkout = () => {
         <h4>Got Coupon?</h4>
         <br />
         {showApplyCoupon()}
-        <br/>
+        <br />
         {discountError && <p className="bg-danger p-2">{discountError}</p>}
       </div>
 
       <div className="col-md-6">
-        <br/>
+        <br />
         <h4>Order Summary</h4>
         <hr />
         <p>Products {products.length}</p>
@@ -175,13 +211,23 @@ const Checkout = () => {
 
         <div className="row">
           <div className="col-md-6">
-            <button
-              className="btn btn-primary"
-              disabled={!addressSaved || !products.length}
-              onClick={handlePlaceOrder}
-            >
-              Place Order
-            </button>
+            {COD ? (
+              <button
+                className="btn btn-primary"
+                disabled={!addressSaved || !products.length}
+                onClick={createCashOrder}
+              >
+                Place Order
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary"
+                disabled={!addressSaved || !products.length}
+                onClick={handlePlaceOrder}
+              >
+                Place Order
+              </button>
+            )}
           </div>
 
           <div className="col-md-6">

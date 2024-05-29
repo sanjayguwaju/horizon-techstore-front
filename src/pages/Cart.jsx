@@ -20,6 +20,19 @@ const Cart = () => {
     }
   };
 
+  const saveCashOrderToDb = async () => {
+    try {
+      dispatch({
+        type: "COD",
+        payload: true,
+      });
+      const res = await userCart(cart, user.token);
+      if (res.data.ok) navigate("/user/checkout");
+    } catch (err) {
+      console.error("Error saving cart", err);
+    }
+  };
+
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
       return currentValue + nextValue.count * nextValue.price;
@@ -79,17 +92,27 @@ const Cart = () => {
           Total: <b>${getTotal()}</b>
           <hr />
           {user ? (
-            <button 
-              className="btn btn-sm btn-primary mt-2"
-              disabled={!cart.length}
-              onClick={saveOrderToDb}
-            >
-              Proceed to Checkout
-            </button>
+            <>
+              <button
+                className="btn btn-sm btn-primary mt-2"
+                disabled={!cart.length}
+                onClick={saveOrderToDb}
+              >
+                Proceed to Checkout
+              </button>
+              <br />
+              <button
+                onClick={saveCashOrderToDb}
+                className="btn btn-sm btn-warning mt-2"
+                disabled={!cart.length}
+              >
+                Pay Cash on Delivery
+              </button>
+            </>
           ) : (
-            <button 
+            <button
               className="btn btn-sm btn-primary mt-2"
-              onClick={()=> navigate("/login", { state: { from: "/cart"}})}
+              onClick={() => navigate("/login", { state: { from: "/cart" } })}
             >
               Login to Checkout
             </button>
