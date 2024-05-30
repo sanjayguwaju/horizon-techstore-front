@@ -7,13 +7,15 @@ import { getCategories } from "../functions/category";
 import { getSubs } from "../functions/sub";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
-import { Menu, Slider, Checkbox, Radio } from "antd";
+import { Menu, Slider, Checkbox, Radio, Layout } from "antd";
 import {
   DollarOutlined,
   DownSquareOutlined,
   StarOutlined,
 } from "@ant-design/icons";
 import Star from "../components/forms/Star";
+import Sider from "antd/es/layout/Sider";
+import { Content, Header } from "antd/es/layout/layout";
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -181,9 +183,9 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
-    setBrand("")
+    setBrand("");
     setColor("");
-    setShipping("")
+    setShipping("");
     fetchProducts({ sub });
   };
 
@@ -209,9 +211,9 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
-    setBrand("")
+    setBrand("");
     setColor("");
-    setShipping("")
+    setShipping("");
     setBrand(e.target.value);
     fetchProducts({ brand: e.target.value });
   };
@@ -283,13 +285,25 @@ const Shop = () => {
   };
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-3 pt-2">
-          <h4>Search/Filter</h4>
-          <hr />
-
-          <Menu defaultOpenKeys={["1", "2", "3", "4","5","6","7"]} mode="inline">
+    <>
+      <Layout hasSider>
+        <Sider
+          width={450}
+          style={{
+            overflow: "auto",
+            height: "100vh",
+            position: "fixed",
+            left: 0,
+            top: 50,
+            bottom: 0,
+            background: "#fff",
+          }}
+        >
+          <div className="demo-logo-vertical" />
+          <Menu
+            defaultOpenKeys={["1", "2", "3", "4", "5", "6", "7"]}
+            mode="inline"
+          >
             <SubMenu
               key="1"
               title={
@@ -378,27 +392,65 @@ const Shop = () => {
               </div>
             </SubMenu>
           </Menu>
-        </div>
+        </Sider>
+        <Layout
+          style={{
+            marginLeft: 200,
+          }}
+        >
+          {/* <Header
+            style={{
+              padding: 0,
+              background: "#561",
+              marginLeft: 250,
+              marginTop:5,
+            }}
+          >
+            <div className="header-content">
+              <h1>My Website</h1>
+              <p>Welcome to my website!</p>
+            </div>
+          </Header> */}
+          <Content
+            style={{
+              margin: "2px 0 0 255px",
+              overflow: "initial",
+            }}
+          >
+            <div
+              style={{
+                padding: 24,
+                textAlign: "center",
+                background: "#fff",
+                borderRadius: "8px",
+              }}
+            >
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-md-12 pt-2">
+                    {loading ? (
+                      <h4 className="text-danger">Loading...</h4>
+                    ) : (
+                      <h4 className="text-danger">Products</h4>
+                    )}
 
-        <div className="col-md-9 pt-2">
-          {loading ? (
-            <h4 className="text-danger">Loading...</h4>
-          ) : (
-            <h4 className="text-danger">Products</h4>
-          )}
+                    {products.length < 1 && <p>No products found</p>}
 
-          {products.length < 1 && <p>No products found</p>}
-
-          <div className="row pb-5">
-            {products.map((p) => (
-              <div key={p._id} className="col-md-4 mt-3">
-                <ProductCard product={p} />
+                    <div className="row pb-5">
+                      {products?.map((p) => (
+                        <div key={p._id} className="col-md-4 mt-3">
+                          <ProductCard product={p} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+            </div>
+          </Content>
+        </Layout>
+      </Layout>
+    </>
   );
 };
 
