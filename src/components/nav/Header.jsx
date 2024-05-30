@@ -8,7 +8,7 @@ import {
   UserAddOutlined,
   LogoutOutlined,
   ShoppingOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom"; // Update import
 import { getAuth, signOut } from "firebase/auth";
@@ -53,71 +53,82 @@ const Header = () => {
   };
 
   return (
-    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-      <Item key="home" icon={<AppstoreOutlined />}>
-        <Link to="/" className="header-nav-link">
-          Home
-        </Link>
-      </Item>
-      <Item key="shop" icon={<ShoppingOutlined />}>
-        <Link to="/shop">Shop</Link>
-      </Item>
-
-      <Item key="cart" icon={<ShoppingCartOutlined />}>
-        <Link to="/cart">
-          <Badge count={cart?.length} offset={[9, 0]}>
-            Cart
-          </Badge>
-        </Link>
-      </Item>
-
-      {!user && (
-        <Item key="register" icon={<UserAddOutlined />} className="float-right">
-          <Link to="/register" className="header-nav-link">
-            Register
+    <>
+      <Menu
+        onClick={handleClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+        className="sticky-header"
+      >
+        <Item key="home" icon={<AppstoreOutlined />}>
+          <Link to="/" className="header-nav-link">
+            Home
           </Link>
         </Item>
-      )}
+        <Item key="shop" icon={<ShoppingOutlined />}>
+          <Link to="/shop">Shop</Link>
+        </Item>
 
-      {!user && (
-        <Item key="login" icon={<UserOutlined />} className="float-right">
-          <Link to="/login" className="header-nav-link">
-            Login
+        <Item key="cart" icon={<ShoppingCartOutlined />}>
+          <Link to="/cart">
+            <Badge count={cart?.length} offset={[9, 0]}>
+              Cart
+            </Badge>
           </Link>
         </Item>
-      )}
 
-      {user && (
-        <SubMenu
-          title={user?.email && user?.email?.split("@")[0]}
-          icon={<SettingOutlined />}
-          className="float-right"
-          key="userSubMenu" // Make sure to provide a unique key
-        >
-          {user.role === "subscriber" && (
-            <Item key="dashboard">
-              <Link to="/user/history" className="header-nav-link">
-                Dashboard
-              </Link>
-            </Item>
-          )}
-
-          {user.role === "admin" && (
-            <Item key="adminDashboard">
-              <Link to="/admin/dashboard" className="header-nav-link">
-                Dashboard
-              </Link>
-            </Item>
-          )}
-          <Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
-            Logout
+        {!user && (
+          <Item
+            key="register"
+            icon={<UserAddOutlined />}
+            className="float-right"
+          >
+            <Link to="/register" className="header-nav-link">
+              Register
+            </Link>
           </Item>
-        </SubMenu>
-      )}
-      <span className="float-right p-1">
-        <Search />
-      </span>
-    </Menu>
+        )}
+
+        {!user && (
+          <Item key="login" icon={<UserOutlined />} className="float-right">
+            <Link to="/login" className="header-nav-link">
+              Login
+            </Link>
+          </Item>
+        )}
+
+        {user && (
+          <SubMenu
+            title={user?.email && user?.email?.split("@")[0]}
+            icon={<SettingOutlined />}
+            className="float-right"
+            key="userSubMenu" // Make sure to provide a unique key
+          >
+            {user.role === "subscriber" && (
+              <Item key="dashboard">
+                <Link to="/user/history" className="header-nav-link">
+                  Dashboard
+                </Link>
+              </Item>
+            )}
+
+            {user.role === "admin" && (
+              <Item key="adminDashboard">
+                <Link to="/admin/dashboard" className="header-nav-link">
+                  Dashboard
+                </Link>
+              </Item>
+            )}
+            <Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
+              Logout
+            </Item>
+          </SubMenu>
+        )}
+        <span className="float-right p-1">
+          <Search />
+        </span>
+      </Menu>
+    </>
   );
 };
 
