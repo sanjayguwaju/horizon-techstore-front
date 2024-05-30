@@ -13,3 +13,10 @@
 .header-nav-link:hover {
   text-decoration: none;
 }
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Optional: this ensures the header stays on top of other elements */
+  background: white; /* Optional: this ensures the header is not transparent */
+}
