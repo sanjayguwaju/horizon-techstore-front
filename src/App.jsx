@@ -41,6 +41,7 @@ const App = () => {
     try {
       const idTokenResult = await user.getIdTokenResult();
       const res = await currentUser(idTokenResult.token);
+      //eslint-disable-next-line
       const { name, email, role, _id } = res?.data;
       const userData = {
         name,
@@ -58,7 +59,8 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => user && handleUserData(user));
     return () => unsubscribe();
-  }, [dispatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

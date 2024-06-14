@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./Header.css";
 import Search from "../forms/Search";
+import { logout } from "../../pages/reducers/userReducer";
 
 const { SubMenu, Item } = Menu;
 
@@ -24,26 +25,25 @@ const Header = () => {
   const [current, setCurrent] = useState("home");
 
   let dispatch = useDispatch();
-const user = useSelector((state) => state.user);
-const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
   let navigate = useNavigate(); // Replace useHistory with useNavigate
 
   const handleClick = (e) => {
     setCurrent(e.key);
   };
 
-  const logout = () => {
-    const auth = getAuth(); // Get the auth instance and call signOut() to signOut from firebase.
-
-    signOut(auth)
-      .then(() => {
-        dispatch(logout(null));
-        navigate("/login"); // Use navigate instead of history.push
-        window.location.reload(); // Refresh the page
-      })
-      .catch((error) => {
-        console.error("Error signing out: ", error);
-      });
+  const handleLogout = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      dispatch(logout());
+      console.log("hello xxxxxxx")
+      navigate("/login");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
   };
 
   return (
@@ -113,7 +113,7 @@ const cart = useSelector((state) => state.cart);
                 </Link>
               </Item>
             )}
-            <Item key="logout" icon={<LogoutOutlined />} onClick={logout}>
+            <Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
               Logout
             </Item>
           </SubMenu>
