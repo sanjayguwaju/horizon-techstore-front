@@ -9,7 +9,7 @@ import Checkout from '../../pages/Checkout';
 
 const UserRoute = () => {
   const [loading, setLoading] = useState(true);
-  let { user } = useSelector((state) => ({ ...state }));
+  let user = useSelector((state) => state);
 
   useEffect(() => {
     // Check if user data is available

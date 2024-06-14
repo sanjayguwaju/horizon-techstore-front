@@ -1,20 +1,25 @@
-import ReactDOM from 'react-dom';
+// Libraries
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-import './index.css';
-import "antd/dist/reset.css";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import rootReducer from '../src/pages/reducers';
+import { configureStore } from '@reduxjs/toolkit';
 import { ConfigProvider } from 'antd';
-import { createRoot } from 'react-dom/client'; // Import createRoot from react-dom/client
+
+// Stylesheets
+import "antd/dist/reset.css";
+import './index.css';
+
+// Local files
+import App from './App';
+import rootReducer from '../src/pages/reducers';
 
 // Create Redux store 
-const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = configureStore({
+  reducer: rootReducer
+});
 
 // Render the root component
-createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <BrowserRouter>
       <ConfigProvider theme={{

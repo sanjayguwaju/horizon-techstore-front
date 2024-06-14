@@ -7,7 +7,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 const RatingModal = ({ children }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
 
   let navigate = useNavigate();
     const { slug } = useParams();

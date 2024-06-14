@@ -11,7 +11,7 @@ import { Button, Divider, Flex, Radio, Table } from 'antd';
 
 const History = () => {
   const [orders, setOrders] = useState([]);
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     loadUserOrders();

@@ -24,7 +24,8 @@ const Header = () => {
   const [current, setCurrent] = useState("home");
 
   let dispatch = useDispatch();
-  let { user, cart } = useSelector((state) => ({ ...state }));
+const user = useSelector((state) => state.user);
+const cart = useSelector((state) => state.cart);
   let navigate = useNavigate(); // Replace useHistory with useNavigate
 
   const handleClick = (e) => {
@@ -37,13 +38,7 @@ const Header = () => {
 
     signOut(auth)
       .then(() => {
-        dispatch({
-          type: "LOGOUT",
-          payload: {
-            email: null,
-            token: null,
-          },
-        });
+        dispatch(logout(null));
         navigate("/login"); // Use navigate instead of history.push
         window.location.reload(); // Refresh the page
       })

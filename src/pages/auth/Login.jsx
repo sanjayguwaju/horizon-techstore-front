@@ -8,6 +8,7 @@ import { Link, useNavigate, useLocation} from "react-router-dom";
 import {  } from "react-router-dom";
 import { signInWithEmailAndPassword,signInWithPopup } from "firebase/auth";
 import { createOrUpdateUser } from "../../functions/auth";
+import { loggedInUser } from "../reducers/userReducer";
 
 
 
@@ -15,7 +16,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
+  console.log("user ---->", user);
   let dispatch = useDispatch();
   let navigate = useNavigate();
   const location = useLocation();
@@ -52,16 +54,13 @@ const Login = () => {
       const { user } = result;
       const idTokenResult = await user?.getIdTokenResult();
       createOrUpdateUser(idTokenResult?.token).then((res)=> {
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            name: res?.data?.name,
-            email: res?.data?.email,
-            token: idTokenResult?.token,
-            role: res?.data?.role,
-            _id: res?.data?._id
-          },
-        });
+        dispatch(loggedInUser({
+          name: res?.data?.name,
+          email: res?.data?.email,
+          token: idTokenResult,
+          role: res?.data?.role,
+          _id: res?.data?._id
+        }));
         roleBasedRedirect(res);
       }).catch(err => console.log(err));
      
@@ -78,16 +77,13 @@ const Login = () => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
         createOrUpdateUser(idTokenResult.token).then((res)=> {
-          dispatch({
-            type: "LOGGED_IN_USER",
-            payload: {
-              name: res?.data?.name,
-              email: res?.data?.email,
-              token: idTokenResult?.token,
-              role: res?.data?.role,
-              _id: res?.data?._id
-            },
-          });
+          dispatch(loggedInUser({
+            name: res?.data?.name,
+            email: res?.data?.email,
+            token: idTokenResult,
+            role: res?.data?.role,
+            _id: res?.data?._id
+          }));
           roleBasedRedirect(res?.data?.role);
         }).catch(err => console.log(err));
       })

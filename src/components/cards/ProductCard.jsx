@@ -6,6 +6,8 @@ import laptop from "../../assets/images/computer/laptop.png";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 import showAverageRating from "../../functions/rating";
+import { addToCart } from "../../pages/reducers/cartReducer";
+import { setVisible } from "../../pages/reducers/drawerReducer";
 
 const { Meta } = Card;
 
@@ -13,7 +15,7 @@ const ProductCard = ({ product }) => {
   const [toolTip, setTooltip] = useState("Click to add");
 
   // redux
-  const { user, cart } = useSelector((state) => ({ ...state }));
+  const { user, cart } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const getCartFromLocalStorage = () => {
@@ -36,15 +38,9 @@ const ProductCard = ({ product }) => {
     setCartInLocalStorage(unique);
     setTooltip("Added");
     // add to reeux state
-    dispatch({
-      type: "ADD_TO_CART",
-      payload: unique,
-    });
+    dispatch(addToCart(unique));
 
-    dispatch({
-      type: "SET_VISIBLE",
-      payload: true,
-    });
+    dispatch(setVisible(true));
   };
 
   // destructure

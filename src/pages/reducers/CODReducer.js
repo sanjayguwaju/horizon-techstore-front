@@ -1,8 +1,13 @@
-export const CODReducer = (state = false, action) => {
-  switch (action.type) {
-    case "COD":
-      return action.payload;
-    default:
-      return state;
-  }
-};
+import { createSlice } from '@reduxjs/toolkit'
+
+const codSlice = createSlice({
+  name: 'cod',
+  initialState: false,
+  reducers: {
+    setCOD: (state, action) => action.payload,
+  },
+})
+
+export const { setCOD } = codSlice.actions
+
+export default codSlice.reducer

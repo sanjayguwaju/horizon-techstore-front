@@ -1,9 +1,15 @@
-export const searchReducer = (state = { text: "" }, action) => {
-    switch (action.type) {
-      case "SEARCH_QUERY":
-        return { ...state, ...action.payload };
-      default:
-        return state;
-    }
-  };
-  
+import { createSlice } from '@reduxjs/toolkit'
+
+const searchSlice = createSlice({
+  name: 'search',
+  initialState: { text: "" },
+  reducers: {
+    searchQuery: (state, action) => {
+      return { ...state, ...action.payload };
+    },
+  },
+})
+
+export const { searchQuery } = searchSlice.actions
+
+export default searchSlice.reducer

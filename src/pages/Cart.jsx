@@ -2,9 +2,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom"; 
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
 import { userCart } from "../functions/user";
+import { setCOD } from "./reducers/CODReducer";
 
 const Cart = () => {
-  const { cart, user } = useSelector((state) => ({ ...state }));
+  const { cart, user } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   let navigate = useNavigate();
@@ -22,10 +23,7 @@ const Cart = () => {
 
   const saveCashOrderToDb = async () => {
     try {
-      dispatch({
-        type: "COD",
-        payload: true,
-      });
+      dispatch(setCOD(true));
       const res = await userCart(cart, user.token);
       if (res.data.ok) navigate("/user/checkout");
     } catch (err) {

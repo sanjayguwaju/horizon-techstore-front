@@ -16,6 +16,7 @@ import {
 import Star from "../components/forms/Star";
 import Sider from "antd/es/layout/Sider";
 import { Content, Header } from "antd/es/layout/layout";
+import { searchQuery } from "./reducers/searchReducer";
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -48,7 +49,7 @@ const Shop = () => {
   const [shipping, setShipping] = useState("");
 
   let dispatch = useDispatch();
-  let { search } = useSelector((state) => ({ ...state }));
+  let search = useSelector((state) => state.search);
   const { text } = search;
 
   useEffect(() => {
@@ -92,10 +93,7 @@ const Shop = () => {
     if (value[0] === 0 && value[1] === 0) {
       loadAllProducts();
     } else {
-      dispatch({
-        type: "SEARCH_QUERY",
-        payload: { text: "" },
-      });
+      dispatch(searchQuery({ text: "" }));
       setPrice(value);
       setTimeout(() => {
         setOk(!ok);
@@ -120,10 +118,7 @@ const Shop = () => {
     ));
 
   const handleCheck = (e) => {
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: { text: "" },
-    });
+    dispatch(searchQuery({ text: "" }));
     setPrice([0, 0]);
     let categorySet = new Set(categoryIds);
     let justChecked = e.target.value;
@@ -141,10 +136,7 @@ const Shop = () => {
 
   const handleStarClick = (num) => {
     // console.log(num);
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: { text: "" },
-    });
+    dispatch(searchQuery({ text: "" }));
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar(num);
@@ -176,10 +168,7 @@ const Shop = () => {
   const handleSub = (sub) => {
     // console.log("SUB", sub);
     setSub(sub);
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: { text: "" },
-    });
+    dispatch(searchQuery({ text: "" }));
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
@@ -204,10 +193,7 @@ const Shop = () => {
 
   const handleBrand = (e) => {
     setSub("");
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: { text: "" },
-    });
+    dispatch(searchQuery({ text: "" }));
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
@@ -233,10 +219,7 @@ const Shop = () => {
 
   const handleColor = (e) => {
     setSub("");
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: { text: "" },
-    });
+    dispatch(searchQuery({ text: "" }));
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
@@ -271,10 +254,7 @@ const Shop = () => {
 
   const handleShippingchange = (e) => {
     setSub("");
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: { text: "" },
-    });
+    dispatch(searchQuery({ text: "" }));
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");

@@ -5,6 +5,9 @@ import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom"; 
+import { addToCart } from "./reducers/cartReducer";
+import { couponApplied } from "./reducers/couponReducer";
+import { setCOD } from "./reducers/CODReducer";
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
@@ -20,7 +23,7 @@ const Checkout = () => {
   let navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { user, COD } = useSelector((state) => ({ ...state }));
+  const { user, COD } = useSelector((state) => state);
   const couponTrueOrFalse = useSelector((state) => state.coupon);
 
   useEffect(() => {
@@ -48,10 +51,7 @@ const Checkout = () => {
   const emptyCart = async () => {
     try {
       clearLocalStorageCart();
-      dispatch({
-        type: "ADD_TO_CART",
-        payload: [],
-      });
+      dispatch(addToCart([]));
       await emptyUserCart(user?.token);
       setProducts([]);
       setTotal(0);
@@ -81,18 +81,12 @@ const Checkout = () => {
       const res = await applyCoupon(user?.token, coupon);
       if (res?.data) {
         setTotalAfterDiscount(res?.data?.totalAfterDiscount);
-        dispatch({
-          type: "COUPON_APPLIED",
-          payload: true,
-        });
+        dispatch(couponApplied(true));
       }
 
       if (res?.data?.err) {
         setDiscountError(res.data.err);
-        dispatch({
-          type: "COUPON_APPLIED",
-          payload: false,
-        });
+        dispatch(couponApplied(false));
       }
     } catch (err) {
       console.error("Error applying coupon", err);
@@ -153,20 +147,14 @@ const createCashOrder = async () => {
       // empty local storage
       if (typeof window !== "undefined") localStorage.removeItem("cart");
       // empty redux cart
-      dispatch({
-        type: "ADD_TO_CART",
-        payload: [],
-      });
+      dispatch(addToCart([]));
+
       // empty redux coupon
-      dispatch({
-        type: "COUPON_APPLIED",
-        payload: false,
-      });
+      dispatch(applyCoupon(false));
+      
       // empty redux COD
-      dispatch({
-        type: "COD",
-        payload: false,
-      });
+      dispatch(setCOD(false));
+
       // empty cart from backend
       emptyUserCart(user.token);
       // redirect

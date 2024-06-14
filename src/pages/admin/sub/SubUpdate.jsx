@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import CategoryForm from "../../../components/forms/CategoryForm";
 
 const SubUpdate = () => {
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
 
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);

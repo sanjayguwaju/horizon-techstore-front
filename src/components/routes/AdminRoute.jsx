@@ -16,7 +16,7 @@ import CreateCouponPage from '../../pages/admin/coupon/CreateCouponPage';
 const AdminRoute = () => {
   const [loading, setLoading] = useState(true);
   const [ok, setOk] = useState(false);
-  let { user } = useSelector((state) => ({ ...state }));
+  let user = useSelector((state) => state);
 
   useEffect(() => {
     // Check if user data is available

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Avatar, Badge, Flex, Button, Spin} from "antd";
 
 const FileUpload = ({ values, setValues, setLoading, loading }) => {
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
 
   const fileInput = useRef();
 

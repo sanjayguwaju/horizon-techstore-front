@@ -8,6 +8,7 @@ import { Spin } from "antd";
 
 // Firebase
 import { auth } from "./firebase";
+import { loggedInUser } from "./pages/reducers/userReducer";
 
 
 // Components
@@ -38,18 +39,19 @@ const App = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
-        currentUser(idTokenResult.token).then((res)=> {
-          dispatch({
-            type: "LOGGED_IN_USER",
-            payload: {
-              name: res?.data?.name,
-              email: res?.data?.email,
-              token: idTokenResult?.token,
-              role: res?.data?.role,
-              _id: res?.data?._id
-            },
-          });
-        }).catch( err => console.log(err));
+        currentUser(idTokenResult.token)
+          .then((res) => {
+            dispatch(
+              loggedInUser({
+                name: res?.data?.name,
+                email: res?.data?.email,
+                token: idTokenResult?.token,
+                role: res?.data?.role,
+                _id: res?.data?._id,
+              })
+            );
+          })
+          .catch((err) => console.log(err));
       }
     });
     return () => unsubscribe();

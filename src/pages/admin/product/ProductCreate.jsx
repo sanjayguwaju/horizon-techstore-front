@@ -46,7 +46,7 @@ const ProductCreate = () => {
   };
 
   // redux
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

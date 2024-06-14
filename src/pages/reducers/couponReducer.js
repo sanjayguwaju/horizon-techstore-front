@@ -1,8 +1,13 @@
-export const couponReducer = (state = false, action) => {
-    switch (action.type) {
-        case "COUPON_APPLIED":
-            return action.payload;
-        default:
-            return state;
-    }
-};
+import { createSlice } from '@reduxjs/toolkit'
+
+const couponSlice = createSlice({
+  name: 'coupon',
+  initialState: false,
+  reducers: {
+    couponApplied: (state, action) => action.payload,
+  },
+})
+
+export const { couponApplied } = couponSlice.actions
+
+export default couponSlice.reducer

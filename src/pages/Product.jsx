@@ -6,7 +6,7 @@ import SingleProduct from "../components/cards/SingleProduct";
 import ProductCard from "../components/cards/ProductCard";
 
 const Product = () => {
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const { slug } = useParams();
 

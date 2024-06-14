@@ -10,7 +10,7 @@ import "./Register.css"
 const Register = ({history}) => {
   const [email, setEmail] = useState("");
 
-  const { user } = useSelector((state) => ({...state}));
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     if (user && user?.token) {
