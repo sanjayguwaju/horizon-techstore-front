@@ -16,13 +16,12 @@ import CreateCouponPage from '../../pages/admin/coupon/CreateCouponPage';
 const AdminRoute = () => {
   const [loading, setLoading] = useState(true);
   const [ok, setOk] = useState(false);
-  let user = useSelector((state) => state);
+  let user = useSelector((state) => state.user);
 
   useEffect(() => {
     // Check if user data is available
     if (user && user.token) {
       currentAdmin(user.token).then(res => {
-        console.log("Current Admin Res ==>", res);
         setOk(true);
         // Set loading to false once user data is available
         setLoading(false); 
@@ -41,7 +40,7 @@ const AdminRoute = () => {
   }
 
   let element;
-  if (!user || !user.token) {
+  if (!user || !user.token.token) {
     // Redirect to login page if user is not authenticated
     element = <Navigate to="/" />;
   }

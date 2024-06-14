@@ -2,7 +2,6 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
 import { ConfigProvider } from 'antd';
 
 // Stylesheets
@@ -11,22 +10,14 @@ import './index.css';
 
 // Local files
 import App from './App';
-import rootReducer from '../src/pages/reducers';
-
-// Create Redux store 
-const store = configureStore({
-  reducer: rootReducer
-});
+import store from './store'; // import the store from the new file
+import { theme } from './theme'; // import the theme from the new file
 
 // Render the root component
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <BrowserRouter>
-      <ConfigProvider theme={{
-        token: {
-          colorPrimary: '#2123bf',
-        }
-      }}>
+      <ConfigProvider theme={theme}>
         <App />
       </ConfigProvider>
     </BrowserRouter>

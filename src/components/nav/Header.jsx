@@ -29,7 +29,6 @@ const cart = useSelector((state) => state.cart);
   let navigate = useNavigate(); // Replace useHistory with useNavigate
 
   const handleClick = (e) => {
-    console.log(e.key);
     setCurrent(e.key);
   };
 
