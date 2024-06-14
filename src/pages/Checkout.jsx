@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { applyCoupon, createCashOrderForUser, emptyUserCart, getUserCart, saveUserAddress } from "../functions/user";
+
+import {
+  applyCoupon,
+  createCashOrderForUser,
+  emptyUserCart,
+  getUserCart,
+  saveUserAddress,
+} from "../functions/user";
+
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { addToCart } from "./reducers/cartReducer";
 import { couponApplied } from "./reducers/couponReducer";
 import { setCOD } from "./reducers/CODReducer";
@@ -30,12 +38,10 @@ const Checkout = () => {
     const fetchUserCart = async () => {
       try {
         const res = await getUserCart(user.token);
-        console.log("res -->", res);
         setProducts(res.data.products);
         setTotal(res.data.cartTotal);
       } catch (err) {
         console.error("Error fetching user cart", err);
-        // Display error to user, or handle it in some other way
       }
     };
 
@@ -99,7 +105,7 @@ const Checkout = () => {
       <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
         Save
       </button>
-      <p style={{ color: 'red', marginLeft: '15px' }}>
+      <p style={{ color: "red", marginLeft: "15px" }}>
         <strong>Don't forget to add address before place order</strong>
       </p>
     </>
@@ -135,37 +141,41 @@ const Checkout = () => {
   );
 
   const handlePlaceOrder = () => {
-    navigate('/payment'); // Navigate to the payment page
+    navigate("/payment"); // Navigate to the payment page
   };
 
-const createCashOrder = async () => {
-  try {
-    const res = await createCashOrderForUser(user.token, COD, couponTrueOrFalse);
-    console.log("USER CASH ORDER CREATED RES ", res);
-    // empty cart form redux, local Storage, reset coupon, reset COD, redirect
-    if (res.data.ok) {
-      // empty local storage
-      if (typeof window !== "undefined") localStorage.removeItem("cart");
-      // empty redux cart
-      dispatch(addToCart([]));
+  const createCashOrder = async () => {
+    try {
+      const res = await createCashOrderForUser(
+        user.token,
+        COD,
+        couponTrueOrFalse
+      );
+      console.log("USER CASH ORDER CREATED RES ", res);
+      // empty cart form redux, local Storage, reset coupon, reset COD, redirect
+      if (res.data.ok) {
+        // empty local storage
+        if (typeof window !== "undefined") localStorage.removeItem("cart");
+        // empty redux cart
+        dispatch(addToCart([]));
 
-      // empty redux coupon
-      dispatch(applyCoupon(false));
-      
-      // empty redux COD
-      dispatch(setCOD(false));
+        // empty redux coupon
+        dispatch(applyCoupon(false));
 
-      // empty cart from backend
-      emptyUserCart(user.token);
-      // redirect
-      setTimeout(() => {
-        navigate("/user/history");
-      }, 1000);
+        // empty redux COD
+        dispatch(setCOD(false));
+
+        // empty cart from backend
+        emptyUserCart(user.token);
+        // redirect
+        setTimeout(() => {
+          navigate("/user/history");
+        }, 1000);
+      }
+    } catch (error) {
+      console.error("Error creating cash order", error);
     }
-  } catch (error) {
-    console.error("Error creating cash order", error);
-  }
-};
+  };
 
   return (
     <div className="row">

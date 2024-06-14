@@ -3,6 +3,7 @@ import { Drawer, Button } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import laptop from "../../assets/images/computer/laptop.png";
+import { setVisibleAction } from "../../pages/reducers/drawerReducer";
 
 const SideDrawer = ({ children }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const SideDrawer = ({ children }) => {
   }, [drawer]);
 
   const onClose = () => {
-    dispatch(setVisible(false));
+    dispatch(setVisibleAction(false));
   };
 
   return (

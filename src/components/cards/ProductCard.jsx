@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import _ from "lodash";
 import showAverageRating from "../../functions/rating";
 import { addToCart } from "../../pages/reducers/cartReducer";
-import { setVisible } from "../../pages/reducers/drawerReducer";
+import { setVisibleAction } from "../../pages/reducers/drawerReducer";
 
 const { Meta } = Card;
 
@@ -41,7 +41,7 @@ const ProductCard = ({ product }) => {
     // add to reeux state
     dispatch(addToCart(unique));
 
-    dispatch(setVisible(true));
+    dispatch(setVisibleAction(true));
   };
 
   // destructure
