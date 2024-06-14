@@ -10,8 +10,6 @@ import { signInWithEmailAndPassword,signInWithPopup } from "firebase/auth";
 import { createOrUpdateUser } from "../../functions/auth";
 import { loggedInUser } from "../reducers/userReducer";
 
-
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +36,7 @@ const Login = () => {
       navigate(intended);
     } else {
       // Assuming res.data.role is coming from an asynchronous operation
-      if (res.data.role === "admin") {
+      if (res?.data?.role === "admin") {
         navigate("/admin/dashboard");
       } else {
         navigate("/user/history");

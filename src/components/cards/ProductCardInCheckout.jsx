@@ -66,7 +66,7 @@ const ProductCardInCheckout = ({ p }) => {
 
     setCartInLocalStorage(updatedCart);
     
-    dispatch(addToCart(updatedCart)
+    dispatch(addToCart(updatedCart));
   };
 
   return (
