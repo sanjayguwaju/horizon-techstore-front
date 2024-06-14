@@ -26,7 +26,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
 
   let navigate = useNavigate();
   // redux
-  const { user, cart } = useSelector((state) => state);
+  const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
+  
   const dispatch = useDispatch();
 
   const getCartFromLocalStorage = () => {

@@ -15,7 +15,8 @@ const ProductCard = ({ product }) => {
   const [toolTip, setTooltip] = useState("Click to add");
 
   // redux
-  const { user, cart } = useSelector((state) => state);
+  const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const getCartFromLocalStorage = () => {
