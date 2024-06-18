@@ -106,7 +106,7 @@ const Checkout = () => {
         Save
       </button>
       <p style={{ color: "red", marginLeft: "15px" }}>
-        <strong>Don't forget to add address before place order</strong>
+        <strong>Don&apos;t forget to add address before place order</strong>
       </p>
     </>
   );
