@@ -6,6 +6,8 @@ import SubList from "../components/sub/SubList";
 import Footer from "../components/footer/Footer";
 import HotDealSection from "../components/deals/HotDealsSection";
 import ShopSection from "../components/shop-collection/ShopCollection";
+import Feature from "../components/feature/Feature";
+import Trending from "../components/trending/Trending";
 
 const Home = () => {
   return (
@@ -29,10 +31,16 @@ const Home = () => {
       </h4>
       <BestSellers />
 
+      <br/>
+      <Feature/>
+
       <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
         Categories
       </h4>
       <CategoryList />
+
+      <br />
+      <Trending/>
 
       <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
         Sub Categories

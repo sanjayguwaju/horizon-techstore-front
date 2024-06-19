@@ -11,7 +11,7 @@ import LocalSearch from "../../../components/forms/LocalSearch";
 import { error } from "jquery";
 
 const SubCreate = () => {
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
 
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);

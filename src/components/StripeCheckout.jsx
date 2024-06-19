@@ -7,6 +7,8 @@ import { Card } from "antd";
 import Laptop from "../assets/images/computer/laptop.png"
 import { CheckOutlined, DollarOutlined } from "@ant-design/icons";
 import { createOrder, emptyUserCart } from "../functions/user";
+import { addToCart } from "../pages/reducers/cartReducer";
+import { couponApplied } from "../pages/reducers/couponReducer";
 
 // Moved outside the component to prevent re-creation on each render
 const cartStyle = {
@@ -29,8 +31,7 @@ const cartStyle = {
 
 const StripeCheckout = () => {
   const dispatch = useDispatch();
-  const { user, coupon } = useSelector((state) => ({ ...state }));
-
+  const { user, coupon } = useSelector((state) => state);
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState("");
@@ -78,19 +79,12 @@ const StripeCheckout = () => {
 
         createOrder(payload, user.token).then((res) => {
           if (res.data.ok) {
-            console.log("i am ok");
             // empty cart from local storage
             if (typeof window !== "undefined") localStorage.removeItem("cart");
             // empty cart from redux
-            dispatch({
-              type: "ADD_TO_CART",
-              payload: [],
-            });
+            dispatch(addToCart([]));
             // reset coupon to false
-            dispatch({
-              type: "COUPON_APPLIED",
-              payload: false,
-            });
+            dispatch(couponApplied(false))
             // empty cart from database
             emptyUserCart(user.token);
           }

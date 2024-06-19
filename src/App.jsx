@@ -8,6 +8,8 @@ import { Spin } from "antd";
 
 // Firebase
 import { auth } from "./firebase";
+import { loggedInUser } from "./pages/reducers/userReducer";
+import { currentUser } from "./functions/auth";
 
 
 // Components
@@ -34,26 +36,31 @@ const AdminRoute = lazy(() => import("./components/routes/AdminRoute"));
 const App = () => {
   const dispatch = useDispatch();
 
+  // New function to handle user data
+  const handleUserData = async (user) => {
+    try {
+      const idTokenResult = await user.getIdTokenResult();
+      const res = await currentUser(idTokenResult.token);
+      //eslint-disable-next-line
+      const { name, email, role, _id } = res?.data;
+      const userData = {
+        name,
+        email,
+        token: idTokenResult?.token,
+        role,
+        _id,
+      };
+      dispatch(loggedInUser(userData));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const idTokenResult = await user.getIdTokenResult();
-        currentUser(idTokenResult.token).then((res)=> {
-          dispatch({
-            type: "LOGGED_IN_USER",
-            payload: {
-              name: res?.data?.name,
-              email: res?.data?.email,
-              token: idTokenResult?.token,
-              role: res?.data?.role,
-              _id: res?.data?._id
-            },
-          });
-        }).catch( err => console.log(err));
-      }
-    });
+    const unsubscribe = auth.onAuthStateChanged(user => user && handleUserData(user));
     return () => unsubscribe();
-  }, [dispatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

@@ -5,13 +5,14 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrUpdateUser } from "../../functions/auth";
+import { loggedInUser } from "../reducers/userReducer";
 
 const RegisterComplete = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
   let dispatch = useDispatch();
-  const { user } = useSelector((state) => ({...state}));
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     setEmail(window.localStorage.getItem("emailForRegistration"));
@@ -41,16 +42,13 @@ const RegisterComplete = () => {
         console.log("idTokenResult ==>", idTokenResult);
 
         createOrUpdateUser(idTokenResult).then((res)=> {
-          dispatch({
-            type: "LOGGED_IN_USER",
-            payload: {
-              name: res?.data?.name,
-              email: res?.data?.email,
-              token: idTokenResult,
-              role: res?.data?.role,
-              _id: res?.data?._id
-            },
-          });
+          dispatch(loggedInUser({
+            name: res?.data?.name,
+            email: res?.data?.email,
+            token: idTokenResult,
+            role: res?.data?.role,
+            _id: res?.data?._id
+          }));
         }).catch(err => console.log(err));
         
         // Redirect or further actions

@@ -15,6 +15,7 @@ import showAverageRating from "../../functions/rating";
 import _ from 'lodash';
 import { toast } from "react-toastify";
 import { addToWishlist } from "../../functions/user";
+import { addToCart } from "../../pages/reducers/cartReducer";
 
 const { TabPane } = Tabs;
 
@@ -25,7 +26,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
 
   let navigate = useNavigate();
   // redux
-  const { user, cart } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
+  
   const dispatch = useDispatch();
 
   const getCartFromLocalStorage = () => {
@@ -48,10 +51,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
     setCartInLocalStorage(unique);
     setTooltip("Added");
     // add to reeux state
-    dispatch({
-      type: "ADD_TO_CART",
-      payload: unique,
-    });
+    dispatch(addToCart(unique));
   };
 
   const { title, description, images, slug, _id } = product;

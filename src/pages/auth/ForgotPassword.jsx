@@ -11,7 +11,7 @@ import { sendPasswordResetEmail} from "firebase/auth";
 const ForgotPassword = ({history}) => {
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
-    const { user } = useSelector((state) => ({...state}));
+    const { user } = useSelector((state) => state.user);
 
     useEffect(() => {
       if (user && user?.token) {

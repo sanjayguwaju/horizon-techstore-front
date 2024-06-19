@@ -6,6 +6,7 @@ import {
   CloseCircleOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
+import { addToCart } from "../../pages/reducers/cartReducer";
 
 const ProductCardInCheckout = ({ p }) => {
   const colors = ["Black", "Brown", "Silver", "White", "Blue"];
@@ -35,10 +36,7 @@ const ProductCardInCheckout = ({ p }) => {
     });
 
     setCartInLocalStorage(cart);
-    dispatch({
-      type: "ADD_TO_CART",
-      payload: cart,
-    });
+    dispatch(addToCart(cart));
   };
 
   const handleQuantityChange = (e) => {
@@ -58,10 +56,7 @@ const ProductCardInCheckout = ({ p }) => {
       });
 
       setCartInLocalStorage(cart);
-      dispatch({
-        type: "ADD_TO_CART",
-        payload: cart,
-      });
+      dispatch(addToCart(cart))
   };
 
   const handleRemove = () => {
@@ -70,10 +65,8 @@ const ProductCardInCheckout = ({ p }) => {
     let updatedCart = cart.filter((product) => product?._id !== p?._id);
 
     setCartInLocalStorage(updatedCart);
-    dispatch({
-      type: "ADD_TO_CART",
-      payload: updatedCart,
-    });
+    
+    dispatch(addToCart(updatedCart));
   };
 
   return (

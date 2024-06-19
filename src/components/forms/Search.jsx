@@ -1,19 +1,17 @@
 import { Link, useNavigate, useParams } from "react-router-dom"; 
 import { useSelector, useDispatch } from "react-redux";
 import { SearchOutlined } from "@ant-design/icons";
+import { searchQuery } from "../../pages/reducers/searchReducer";
 
 const Search = () => {
   const dispatch = useDispatch();
-  const { search } = useSelector((state) => ({ ...state }));
+  const search = useSelector((state) => state.search);
   const { text } = search;
 
   let navigate = useNavigate();
 
   const handleChange = (e) => {
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: { text: e.target.value },
-    });
+    dispatch(searchQuery({ text: e.target.value }));
   };
 
   const handleSubmit = (e) => {

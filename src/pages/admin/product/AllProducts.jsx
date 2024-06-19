@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 const AllProducts = () => {
-    const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
     
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
