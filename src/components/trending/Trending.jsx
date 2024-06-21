@@ -1,29 +1,55 @@
+import { Container, Row, Col, Button, Image } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+
+const offers = [
+  {
+    "id": 1,
+    "imgSrc": "img/offer-1.png",
+    "altText": "Spring Collection Offer",
+    "title": "Black Friday Collection",
+    "subtitle": "20% off the all order"
+  },
+  {
+    "id": 2,
+    "imgSrc": "img/offer-2.png",
+    "altText": "Winter Collection Offer",
+    "title": "Weekend Sales Collection",
+    "subtitle": "20% off the all order"
+  }
+];
+
+const Offer = ({ offer }) => (
+  <div style={{backgroundColor: '#D31737'}} className="position-relative text-center text-md-right text-white mb-2 py-5 px-5">
+    <Image src={offer?.imgSrc} alt={offer?.altText} />
+    <div className="offer-content">
+      <h5 className="text-uppercase text-white mb-3">{offer?.subtitle}</h5>
+      <h1 className="mb-4 font-weight-semi-bold">{offer?.title}</h1>
+      <Button variant="outline-primary text-white" className="py-md-2 px-md-3">Shop Now</Button>
+    </div>
+  </div>
+);
+
+Offer.propTypes = {
+  offer: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    imgSrc: PropTypes.string.isRequired,
+    altText: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired
+  }).isRequired
+};
+
 const Trending = () => {
   return (
-    <div className="container-fluid offer pt-5">
-      <div className="row px-xl-5">
-        <div className="col-md-6 pb-4">
-          <div className="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
-            <img src="img/offer-1.png" alt="Spring Collection Offer" />
-            <div className="position-relative" style={{ zIndex: 1 }}>
-              <h5 className="text-uppercase text-primary mb-3">20% off the all order</h5>
-              <h1 className="mb-4 font-weight-semi-bold">Spring Collection</h1>
-              <a href="/" className="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6 pb-4">
-          <div className="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5">
-            <img src="img/offer-2.png" alt="Winter Collection Offer" />
-            <div className="position-relative" style={{ zIndex: 1 }}>
-              <h5 className="text-uppercase text-primary mb-3">20% off the all order</h5>
-              <h1 className="mb-4 font-weight-semi-bold">Winter Collection</h1>
-              <a href="/" className="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container fluid className="offer pt-5">
+      <Row className="px-xl-5">
+        {offers.map(offer => (
+          <Col md={6} className="pb-4" key={offer.id}>
+            <Offer offer={offer} />
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 };
 

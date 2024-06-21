@@ -81,12 +81,12 @@ const Footer = () => {
             <div className="row">
               <div className="col-md-12 text-center">
                 <ul className="footer-payments">
-                  <li><Link to="#"><FontAwesomeIcon icon={faCcVisa} /></Link></li>
-                  <li><Link to="#"><FontAwesomeIcon icon={faCreditCard} /></Link></li>
-                  <li><Link to="#"><FontAwesomeIcon icon={faCcPaypal} /></Link></li>
-                  <li><Link to="#"><FontAwesomeIcon icon={faCcMastercard} /></Link></li>
-                  <li><Link to="#"><FontAwesomeIcon icon={faCcDiscover} /></Link></li>
-                  <li><Link to="#"><FontAwesomeIcon icon={faCcAmex} /></Link></li>
+                  <li><Link to="#"><FontAwesomeIcon icon={faCcVisa} className="fa" /></Link></li>
+                  <li><Link to="#"><FontAwesomeIcon icon={faCreditCard} className="fa" /></Link></li>
+                  <li><Link to="#"><FontAwesomeIcon icon={faCcPaypal} className="fa" /></Link></li>
+                  <li><Link to="#"><FontAwesomeIcon icon={faCcMastercard} className="fa" /></Link></li>
+                  <li><Link to="#"><FontAwesomeIcon icon={faCcDiscover} className="fa" /></Link></li>
+                  <li><Link to="#"><FontAwesomeIcon icon={faCcAmex} className="fa" /></Link></li>
                 </ul>
                 <span className="copyright">
                   {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
