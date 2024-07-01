@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { useState } from "react";
-import { Menu, Badge } from "antd";
+import { ConfigProvider, Menu, Badge } from "antd";
 import {
   AppstoreOutlined,
   SettingOutlined,
@@ -19,9 +19,14 @@ import "./Header.css";
 import Search from "../forms/Search";
 import { logout } from "../../pages/reducers/userReducer";
 
+import logo from "../../../public/logo.png"
+
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
+
+
+
   const [current, setCurrent] = useState("home");
 
   let dispatch = useDispatch();
@@ -38,7 +43,6 @@ const Header = () => {
     try {
       await signOut(auth);
       dispatch(logout());
-      console.log("hello xxxxxxx")
       navigate("/login");
       window.location.reload();
     } catch (error) {
@@ -48,82 +52,127 @@ const Header = () => {
 
   return (
     <>
-      <Menu
-        onClick={handleClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        className="sticky-header"
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#00b96b',
+            borderRadius: 2,
+            colorBgContainer: '#f6ffed',
+          },
+          components: {
+            Menu: {
+              colorBgMenuItemHover: 'inherit', // Prevent background change on hover
+              colorTextMenuItemHover: 'inherit', // Prevent text color change on hover
+            },
+            MenuItem: {
+              colorBgMenuItemHover: 'inherit', // Prevent background change on hover
+              colorTextMenuItemHover: 'inherit', // Prevent text color change on hover
+            },
+            Button: {
+              colorPrimaryHover: '#007b50',
+            },
+            Input: {
+              colorBorder: '#00b96b',
+              colorBgContainer: '#f6ffed',
+            },
+          },
+        }}
       >
-        <Item key="home" icon={<AppstoreOutlined />}>
-          <Link to="/" className="header-nav-link">
-            Home
-          </Link>
-        </Item>
-        <Item key="shop" icon={<ShoppingOutlined />}>
-          <Link to="/shop">Shop</Link>
-        </Item>
-
-        <Item key="cart" icon={<ShoppingCartOutlined />}>
-          <Link to="/cart">
-            <Badge count={cart?.length} offset={[9, 0]}>
-              Cart
-            </Badge>
-          </Link>
-        </Item>
-
-        {!user && (
-          <Item
-            key="register"
-            icon={<UserAddOutlined />}
-            className="float-right"
+        <div className="header">
+          <Menu
+            onClick={handleClick}
+            selectedKeys={[current]}
+            mode="horizontal"
+            className="header-left"
           >
-            <Link to="/register" className="header-nav-link">
-              Register
-            </Link>
-          </Item>
-        )}
-
-        {!user && (
-          <Item key="login" icon={<UserOutlined />} className="float-right">
-            <Link to="/login" className="header-nav-link">
-              Login
-            </Link>
-          </Item>
-        )}
-
-        {user && (
-          <SubMenu
-            title={user?.email && user?.email?.split("@")[0]}
-            icon={<SettingOutlined />}
-            className="float-right"
-            key="userSubMenu" // Make sure to provide a unique key
-          >
-            {user.role === "subscriber" && (
-              <Item key="dashboard">
-                <Link to="/user/history" className="header-nav-link">
-                  Dashboard
-                </Link>
-              </Item>
-            )}
-
-            {user.role === "admin" && (
-              <Item key="adminDashboard">
-                <Link to="/admin/dashboard" className="header-nav-link">
-                  Dashboard
-                </Link>
-              </Item>
-            )}
-            <Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
-              Logout
+            <Item></Item>
+            <Item key="home" icon={<AppstoreOutlined />}>
+              <Link to="/" className="custom-link">Home</Link>
             </Item>
-          </SubMenu>
-        )}
-        <span className="float-right p-1">
-          <Search />
-        </span>
-      </Menu>
+            <Item key="shop" icon={<ShoppingOutlined />}>
+              <Link to="/shop" className="custom-link">Shop</Link>
+            </Item>
+            <Item key="cart" icon={<ShoppingCartOutlined />}>
+              <Link to="/cart">
+                <Badge count={cart?.length} offset={[9, 0]}>
+                  Cart
+                </Badge>
+              </Link>
+            </Item>
+          </Menu>
+          <img src={logo} alt="horizon-store" width="200px" style={{ position: 'relative', zIndex: 1 }} />
+
+          {/* <div className="header-center">
+          <h4>Horizon Store</h4>
+        </div> */}
+
+          <div className="header-right">
+            <div className="">
+              <Menu
+                onClick={handleClick}
+                selectedKeys={[current]}
+                mode="horizontal"
+                className="box-right"
+              >
+                <Item></Item>
+                {!user && (
+                  <Item key="register" icon={<UserAddOutlined />}>
+                    <Link to="/register">Register</Link>
+                  </Item>
+                )}
+
+                {!user && (
+                  <Item key="login" icon={<UserOutlined />}>
+                    <Link to="/login">Login</Link>
+                  </Item>
+                )}
+
+                {!user && (
+                  <Item className="search">
+                    <Search />
+                  </Item>
+                )}
+
+                {user && (
+                  <SubMenu
+                    title={user?.email && user?.email?.split("@")[0]}
+                    icon={<SettingOutlined />}
+                    key="userSubMenu"
+                  >
+                    {user.role === "subscriber" && (
+                      <Item key="dashboard">
+                        <Link to="/user/history">Dashboard</Link>
+                      </Item>
+                    )}
+
+                    {user?.role === "admin" && (
+                      <Item key="adminDashboard">
+                        <Link to="/admin/dashboard">Dashboard</Link>
+                      </Item>
+                    )}
+                    <Item
+                      key="logout"
+                      icon={<LogoutOutlined />}
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </Item>
+                  </SubMenu>
+                )}
+
+                {user && (
+                  <Item className="search">
+                    <Search />
+                  </Item>
+                )}
+              </Menu>
+            </div>
+          </div>
+        </div>
+      </ConfigProvider>
     </>
   );
+
 };
 
 export default Header;

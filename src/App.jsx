@@ -10,6 +10,7 @@ import { Spin } from "antd";
 import { auth } from "./firebase";
 import { loggedInUser } from "./pages/reducers/userReducer";
 import { currentUser } from "./functions/auth";
+import Header2 from "./components/nav/Header2";
 
 
 // Components
@@ -66,7 +67,8 @@ const App = () => {
     <>
       <Suspense fallback={<Spin size="large" />}>
         <div>
-          <Header />
+          {/* <Header /> */}
+          <Header2/>
           <SideDrawer />
           <ToastContainer />
           <Routes>

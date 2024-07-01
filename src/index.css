@@ -1,5 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 :root {
     --bs-border-width: 0px;
+}
+
+body {
+    overflow-x: hidden;
 }
 
 #container {

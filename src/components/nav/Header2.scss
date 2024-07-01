@@ -1,0 +1,103 @@
+.text-input {
+    outline: none; // Removes the outline on focus
+    padding: 8px; // Example padding, adjust as needed
+    background-color: transparent; // Ensures the background is transparent
+}
+
+.black-text {
+    color: black !important; // Use !important to override any other styles if necessary
+}
+
+.custom-menu {
+    width: 120% !important;
+    margin-top: 10px !important;
+    font-size: 1.25rem; /* Increase font size */
+}
+
+.custom-menu-item {
+    padding: 15px 20px; /* Increase padding */
+}
+
+.custom-menu-link {
+    text-decoration: none !important;
+}
+
+
+/* Add to your CSS file */
+.dropdown-menu {
+    display: block; /* Ensure it's not hidden */
+    position: absolute; /* Position it relative to its positioned ancestor */
+    top: 100%; /* Position it below the toggle element */
+    left: 0;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.dropdown-item {
+    display: block; /* Ensure links are visible and block-level */
+    color: white; /* Assuming bg-danger is red, white text for visibility */
+    padding: 8px 12px; /* Add some padding for better clickability */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.dropdown-item:hover {
+    background-color: #dc3545; /* Slightly darker shade for hover, adjust as needed */
+}
+
+/* Base styles */
+.nav-link {
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+.user-container {
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .nav-link {
+        font-size: 14px; /* Smaller font size */
+    }
+
+    .user-container {
+        flex-direction: column; /* Stack icon and username vertically */
+    }
+
+    .dropdown-menu {
+        right: 0; /* Align dropdown to the right */
+    }
+
+    .d-flex {
+        flex-direction: column; /* Stack elements vertically */
+    }
+
+    .search-input {
+        width: 100%; /* Full width for the search input */
+    }
+}
+
+/* Hamburger menu for very small screens */
+@media (max-width: 576px) {
+    .nav-items {
+        display: none; /* Hide nav items initially */
+    }
+
+    .hamburger-menu {
+        display: block; /* Show hamburger menu */
+    }
+
+    .hamburger-menu.open + .nav-items {
+        display: flex; /* Show nav items when hamburger menu is open */
+        flex-direction: column;
+    }
+}

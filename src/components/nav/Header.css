@@ -1,4 +1,4 @@
-.float-right {
+/* .float-right {
   float: right !important;
 }
 
@@ -18,5 +18,69 @@
   position: sticky;
   top: 0;
   z-index: 1000; /* Optional: this ensures the header stays on top of other elements */
-  background: white; /* Optional: this ensures the header is not transparent */
+  /* background: white; Optional: this ensures the header is not transparent */
+/* } */ 
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-center h4 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+}
+.header-left{
+  flex: 2;
+}
+
+.header-right {
+  flex: 2;
+}
+
+.header-center {
+  flex: 3;
+}
+
+.my-custom-class {
+  color: red !important;
+  font-size: 40px !important;
+}
+
+.custom-button {
+  background-color: white;
+  color: black;
+  border: none;
+}
+
+.box-right {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.search {
+  margin-top: 5px !important;
+}
+.search:focus {
+  outline: none !important;
+}
+
+.Menu .search:hover {
+  background-color: white !important; /* Replace with the original background color */
+  color: black !important; /* Replace with the original text color */
+}
+
+.custom-link {
+  text-decoration: none; /* Removes underline by default */
+}
+
+.custom-link:hover {
+  text-decoration: none; /* Ensures underline is removed on hover */
 }
