@@ -3,13 +3,14 @@ import logo from "../../../public/logo.png";
 import { FaHome, FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa'; // Importing icons from react-icons
 import { BiCake, BiCart, BiHome, BiShoppingBag, BiSolidShoppingBag, BiUser, BiLogIn } from "react-icons/bi";
 import { useState } from 'react';
-import { Dropdown, Menu } from 'antd';
+import { Badge, Dropdown, Menu } from 'antd';
 import { MdOutlineAccountBox } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import "firebase/compat/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../pages/reducers/userReducer";
 import { getAuth, signOut } from 'firebase/auth';
+import Search from '../forms/Search';
 
 
 const Header2 = () => {
@@ -78,7 +79,10 @@ const Header2 = () => {
 
                     <Link to="/cart" className="nav-link text-decoration-none d-flex align-items-center black-text">
                         <BiCart className="mr-1 black-text" size={30} />
-                        <span>Cart</span>
+                        
+                        <Badge count={cart?.length} offset={[9, 0]}>
+                            <span style={{ fontSize: 'larger' }}>Cart</span>
+                        </Badge>
                     </Link>
                 </div>
                 <div className="h3 font-weight-bold text-primary m-0">
@@ -87,10 +91,7 @@ const Header2 = () => {
                     </a>
                 </div>
                 <div className="d-flex align-items-center">
-                    <div className="position-relative mr-3">
-                        <input type="text" placeholder="Search Products ..." className="bg-input text-input p-2" />
-                    </div>
-
+                    <Search/>
                     {!user && (
                         <>
                             <div className="user-container d-flex align-items-center mr-3">
